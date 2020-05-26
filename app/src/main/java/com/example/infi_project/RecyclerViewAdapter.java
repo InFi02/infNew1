@@ -1,6 +1,7 @@
 package com.example.infi_project;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -33,6 +35,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<String> interestNames= new ArrayList<>();
     private Context mContext;
 
+    int selectedPosition=-1;
+
+
     public String interest_selected;
 
 
@@ -55,19 +60,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final viewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: called");
         //Glide.with(mContext).asBitmap();
         holder.interest_name.setText(interestNames.get(position));
+
+        if(selectedPosition==position)
+            holder.itemView.setBackgroundColor(Color.parseColor("#070707"));
+        else
+            holder.itemView.setBackgroundColor(Color.parseColor("#2FDAD0D0"));
+
+
         holder.interest_name.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        selectedPosition=position;
+                        notifyDataSetChanged();
+
+
                         Log.d(TAG, "onClick: clicked "+interestNames.get(position));
-                        Toast.makeText(mContext, "Clicked"+interestNames.get(position), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(mContext, "Clicked"+interestNames.get(position), Toast.LENGTH_SHORT).show();
                         if (interestNames.get(position)!=null) {
                             interest_selected = interestNames.get(position);
+                            //holder.interestRecyclerCard.setCardBackgroundColor(Color.rgb(235,243,232));
                             mAdapterCallback.onMethodCallback(interest_selected);
                         }
                         else {
@@ -87,12 +104,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return interestNames.size();
     }
 
-    public class  viewHolder extends RecyclerView.ViewHolder{
+    class  viewHolder extends RecyclerView.ViewHolder{
         TextView interest_name;
+        CardView interestRecyclerCard;
 
-        public viewHolder(@NonNull View itemView) {
+        viewHolder(@NonNull View itemView) {
             super(itemView);
             interest_name=itemView.findViewById(R.id.interest_name);
+            interestRecyclerCard=itemView.findViewById(R.id.interestRecyclerCard);
 
         }
     }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,14 +39,16 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
     public String mobileText;
     private ArrayList<String> interestNames= new ArrayList<>();
     private static final String TAG= "Explore:";
-    public String interest_selected="All";
+    public String interest_selected;
+
+    private ProgressBar exploreProgressBar;
 
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> profileAboutList= new ArrayList<>();
     private ArrayList<String> profileImageList= new ArrayList<>();
     private ArrayList<String> profileNumberList= new ArrayList<>();
 
-    DatabaseReference reff;
+    private DatabaseReference reff;
 
 
 
@@ -63,7 +66,6 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
 
         AppMainPage activity= (AppMainPage) getActivity();
         mobileText=activity.sendData();
-        interestNames.add("All");
 
         reff= FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
         reff.addValueEventListener(new ValueEventListener() {
@@ -88,6 +90,7 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                     interest_selected=interestNames.get(1);
 
                     initRecyclerView();
+                    retrieveInterestedProfiles(interest_selected);
                 }
 
                 else {
@@ -113,7 +116,9 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore_tab, container, false);
+        View view=inflater.inflate(R.layout.fragment_explore_tab, container, false);
+        exploreProgressBar=view.findViewById(R.id.exploreProgressBar);
+        return  view;
     }
 
     @Override
@@ -121,37 +126,48 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
 
 
         initRecyclerView();
+        initProfieRecyclerView();
 
 
     }
 
 
+
+
     @Override
     public void onMethodCallback(String interest) {
         interest_selected=interest;
-        if (interest_selected!="All") {
-            Log.d(TAG, "Getting profiles of a interest");
-            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("interests").child(interest_selected);
-            Query query = dbRef.orderByKey();
+        retrieveInterestedProfiles(interest_selected);
 
-            ValueEventListener queryValueListener = new ValueEventListener() {
+    }
 
-                @Override
-                public void onDataChange(final DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
+    private void retrieveInterestedProfiles(String interest_selected){
+        Log.d(TAG, "Getting profiles of a interest");
+        exploreProgressBar.setVisibility(View.VISIBLE);
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("interests").child(interest_selected);
+        Query query = dbRef.orderByKey();
 
-                        profileImageList.clear();
-                        profileNameList.clear();
-                        profileAboutList.clear();
-                        profileNumberList.clear();
+        ValueEventListener queryValueListener = new ValueEventListener() {
 
-                        Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                        Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+            @Override
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
 
-                        while (iterator.hasNext()) {
-                            DataSnapshot next = (DataSnapshot) iterator.next();
-                            Log.i(TAG, "Value = " + next.child("userPhone").getValue());
-                            String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
+                    profileImageList.clear();
+                    profileNameList.clear();
+                    profileAboutList.clear();
+                    profileNumberList.clear();
+
+                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+
+                    while (iterator.hasNext()) {
+                        DataSnapshot next = (DataSnapshot) iterator.next();
+                        Log.i(TAG, "Value = " + next.child("userPhone").getValue());
+                        String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
+                        System.out.println("Value= "+value);
+                        System.out.println("mobileText= "+mobileText);
+                        if (value!=mobileText) {
                             profileNumberList.add(value);
 
                             reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
@@ -159,8 +175,8 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                                     if (dataSnapshot1.exists()) {
-                                        String ImageUrl= Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
-                                        String ProfileName= Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
+                                        String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
+                                        String ProfileName = Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
 
                                         profileImageList.add(ImageUrl);
                                         profileNameList.add(ProfileName);
@@ -176,25 +192,26 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
 
                                 }
                             });
-
                         }
-                    }
-
-                    else {
-                        Toast.makeText(getContext(), "Selected interest has no database", Toast.LENGTH_SHORT).show();
+                        else continue;
 
                     }
                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                else {
+                    Toast.makeText(getContext(), "Selected interest has no database", Toast.LENGTH_SHORT).show();
 
                 }
-            };
+            }
 
-            query.addListenerForSingleValueEvent(queryValueListener);
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-        }
+            }
+        };
+
+        query.addListenerForSingleValueEvent(queryValueListener);
+
     }
 
 
@@ -215,6 +232,15 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
         ProfileListRecyclerViewAdapter profileAdapter= new ProfileListRecyclerViewAdapter(getContext(),profileNameList,profileAboutList,profileImageList);
         profileRecyclerView.setAdapter(profileAdapter);
         profileRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        exploreProgressBar.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void onPause() {
+
+        super.onPause();
+        initProfieRecyclerView();
 
     }
 
