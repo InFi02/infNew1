@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
 
         Glide.with(mContext)
                 .asBitmap()
-                .load(profileAboutList.get(position))
+                .load(profileImageList.get(position))
                 .into(holder.profileImage);
 
         holder.profileName.setText(profileNameList.get(position));
@@ -59,7 +60,6 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: "+profileNameList.get(position));
-
                 Toast.makeText(mContext, profileNameList.get(position)+ " is Clicked", Toast.LENGTH_SHORT).show();
             }
         });
@@ -73,6 +73,7 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         CircleImageView profileImage;
+        //ImageView profileImage;
         TextView profileName;
         TextView profileAbout;
         RelativeLayout profileCardParent;
