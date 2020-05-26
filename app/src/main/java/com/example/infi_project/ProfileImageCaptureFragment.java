@@ -81,7 +81,7 @@ public class ProfileImageCaptureFragment extends Fragment {
 
 
 
-
+        //boolean imageSelected;
         add=getView().findViewById(R.id.add);
         skip=getView().findViewById(R.id.skip);
         profile=getView().findViewById(R.id.ImageProfile);
@@ -112,6 +112,17 @@ public class ProfileImageCaptureFragment extends Fragment {
 
             }
         });
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent= new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(galleryIntent,galleryPick);
+
+
+            }
+        });
 
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +130,7 @@ public class ProfileImageCaptureFragment extends Fragment {
                 Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
                 appMainPage_intent.putExtra("mobileText", mobileText);
                 startActivity(appMainPage_intent);
+                RootRef.child("userDetails").child(mobileText).child("image").setValue(null);
 
             }
         });
@@ -174,6 +186,9 @@ public class ProfileImageCaptureFragment extends Fragment {
                                                                 Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
                                                                 appMainPage_intent.putExtra("mobileText", mobileText);
                                                                 startActivity(appMainPage_intent);
+                                                                if(getActivity() != null) {
+                                                                    getActivity().finish();
+                                                                }
 
                                                             } else {
                                                                 String message = task.getException().toString();
