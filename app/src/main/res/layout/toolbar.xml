@@ -6,4 +6,14 @@
     android:id="@+id/myAppbar"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+
+
+    <ImageView
+        android:id="@+id/menuic"
+        android:src="@drawable/menuicon"
+        android:layout_height="40dp"
+        android:layout_width="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"/>
+
 </androidx.appcompat.widget.Toolbar>

@@ -130,7 +130,12 @@ public class ProfileImageCaptureFragment extends Fragment {
                 Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
                 appMainPage_intent.putExtra("mobileText", mobileText);
                 startActivity(appMainPage_intent);
-                RootRef.child("userDetails").child(mobileText).child("image").setValue(null);
+
+                Uri test=Uri.parse("https://firebasestorage.googleapis.com/v0/b/infiproject-88ce7.appspot.com/o/ProfileImages%2Fprofile_image.png?alt=media&token=8ef76099-7ffa-4ec6-ab46-3e2e218ce649");
+                String picky=test.toString();
+
+
+                RootRef.child("userDetails").child(mobileText).child("image").setValue(picky);
 
             }
         });
@@ -155,7 +160,9 @@ public class ProfileImageCaptureFragment extends Fragment {
 
             else if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                assert result != null;
+
+
+
                 Log.d("Image cropped", result.toString());
                 if (resultCode == RESULT_OK) {
 
