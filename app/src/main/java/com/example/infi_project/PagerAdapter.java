@@ -13,6 +13,7 @@ import com.example.infi_project.data.ChatTab;
 import com.example.infi_project.data.ExploreTab;
 import com.example.infi_project.data.FeedTab;
 import com.example.infi_project.data.ProfileTab;
+import com.example.infi_project.data.model.fragmentusers;
 
 //public class PagerAdapter extends FragmentStatePagerAdapter {
 //
@@ -64,7 +65,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new FeedTab();
             case 1:
-                return new ChatTab();
+                return new fragmentusers();
             case 2:
                 return new ExploreTab();
             case 3:
