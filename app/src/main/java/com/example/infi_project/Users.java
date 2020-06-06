@@ -15,12 +15,12 @@ public class Users {
     boolean choiceSelected;
     public Vector userInterest=new Vector();
     public  int totalNoOfInterest;
-    public String url;
+    public String image;
 
     public Users() {
     }
 
-    public Users(String userName, String userPhone, String userEmail, String dateofBirth, String rollno, String pass, boolean choiceSelected, Vector userInterest,int totalNoOfInterest,String url) {
+    public Users(String userName, String userPhone, String userEmail, String dateofBirth, String rollno, String pass, boolean choiceSelected, Vector userInterest,int totalNoOfInterest,String image) {
         this.userName = userName;
         this.userPhone = userPhone;
         this.userEmail = userEmail;
@@ -30,7 +30,7 @@ public class Users {
         this.choiceSelected=choiceSelected;
         this.userInterest=userInterest;
         this.totalNoOfInterest=totalNoOfInterest;
-        this.url=url;
+        this.image=image;
     }
 
     public String getUserName() {
@@ -105,11 +105,11 @@ public class Users {
         this.totalNoOfInterest = totalNoOfInterest;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImage() {
+        return image;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

@@ -183,7 +183,7 @@ public class ProfileImageCaptureFragment extends Fragment {
                                         public void onSuccess(Uri uri) {
                                             final String downloadUrl = uri.toString();
 
-                                            RootRef.child("userDetails").child(mobileText).child("image")
+                                            RootRef.child("userDetails").child(mobileText).child("")
                                                     .setValue(downloadUrl)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
