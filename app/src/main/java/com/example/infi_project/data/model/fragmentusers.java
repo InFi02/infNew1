@@ -126,10 +126,10 @@ public class fragmentusers extends Fragment  {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                                     if (dataSnapshot1.exists()) {
                                         String ProfileName = Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
-                                        String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
+                                       // String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
 
 
-                                        profileImageList.add(ImageUrl);
+                                       // profileImageList.add(ImageUrl);
                                         profileNameList.add(ProfileName);
 
                                     } else {
@@ -174,6 +174,8 @@ public class fragmentusers extends Fragment  {
 
 
         };
+
+        query.addValueEventListener(queryValueListener);
 
     }
 
