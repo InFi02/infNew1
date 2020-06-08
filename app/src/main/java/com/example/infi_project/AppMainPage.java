@@ -64,6 +64,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         progressBar = findViewById(R.id.progressBarApp);
+        tabLayout.setupWithViewPager(viewPager);
+
 
         Intent appMainPage_intent = getIntent();
         mobileText = appMainPage_intent.getStringExtra("mobileText");
@@ -94,7 +96,6 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
         });
 
 
-        tabLayout.setupWithViewPager(viewPager);
 
 
 
