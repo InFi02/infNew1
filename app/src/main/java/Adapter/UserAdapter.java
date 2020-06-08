@@ -1,10 +1,10 @@
 package Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,12 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.infi_project.MessageActivity;
 import com.example.infi_project.R;
-import com.example.infi_project.RecyclerViewAdapter;
-import com.example.infi_project.Users;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,12 +23,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private Context mcontext;
    private ArrayList<String> profileNameList= new ArrayList<>();
+    private ArrayList<String> profilePhoneList= new ArrayList<>();
+
     private ArrayList<String> profileImageList= new ArrayList<>();
     //private List<Users> musers;
-    public UserAdapter(Context mcontext,ArrayList<String> profileNameList, ArrayList<String> profileImageList){
+    public UserAdapter(Context mcontext,ArrayList<String> profileNameList, ArrayList<String> profileImageList,ArrayList<String> profilePhoneList){
 
         this.profileNameList = profileNameList;
         this.profileImageList = profileImageList;
+        this.profilePhoneList=profilePhoneList;
         this.mcontext=mcontext;
 
     }
@@ -45,7 +46,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
 
 
@@ -63,6 +64,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     .into(holder.profile_image);
 
         holder.username.setText(profileNameList.get(position));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent= new Intent(mcontext, MessageActivity.class);
+                intent.putExtra("phone",profilePhoneList.get(position));
+                mcontext.startActivity(intent);
+
+
+            }
+        });
 
         //}
 

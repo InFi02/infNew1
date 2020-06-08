@@ -71,7 +71,7 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Infi");
+        getSupportActionBar().setTitle("");
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_menu);

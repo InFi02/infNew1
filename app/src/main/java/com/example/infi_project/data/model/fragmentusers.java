@@ -171,6 +171,8 @@ public class fragmentusers extends Fragment  {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
+
         };
 
     }
@@ -178,7 +180,7 @@ public class fragmentusers extends Fragment  {
     private void initChatRecyclerView() {
 
         RecyclerView chatRecyclerView= getView().findViewById(R.id.ChatListRecycler);
-        UserAdapter userAdapter= new UserAdapter(getContext(),profileNameList,profileImageList);
+        UserAdapter userAdapter= new UserAdapter(getContext(),profileNameList,profileImageList,profileNumberList);
         chatRecyclerView.setAdapter(userAdapter);
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
