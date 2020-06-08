@@ -145,6 +145,8 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
         Log.d(TAG, "Getting profiles of a interest");
         exploreProgressBar.setVisibility(View.VISIBLE);
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference().child("interests").child(interest_selected);
+
+
         Query query = dbRef.orderByKey();
 
         ValueEventListener queryValueListener = new ValueEventListener() {
@@ -158,6 +160,14 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                     profileAboutList.clear();
                     profileNumberList.clear();
 
+                    if ((int)dataSnapshot.getChildrenCount()==1){
+                        profileNameList.add("No User With Similar interest");
+                        profileAboutList.add("");
+                        profileImageList.add("");
+                        initProfieRecyclerView();
+
+                    }
+
                     Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
                     Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
 
@@ -167,7 +177,7 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                         String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
                         System.out.println("Value= "+value);
                         System.out.println("mobileText= "+mobileText);
-                        if (value!=mobileText) {
+                        if (!value.equals(mobileText)) {
                             profileNumberList.add(value);
 
                             reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
