@@ -85,7 +85,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return profileImageList.size();
+        return profileNameList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
