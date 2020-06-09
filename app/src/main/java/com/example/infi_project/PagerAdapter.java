@@ -65,7 +65,7 @@ public class PagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new FeedTab();
             case 1:
-                return new ChatTab();
+                return new fragmentusers();
             case 2:
                 return new ExploreTab();
             case 3:
