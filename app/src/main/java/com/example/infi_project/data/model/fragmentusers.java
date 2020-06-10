@@ -39,11 +39,14 @@ import static androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL;
 
 public class fragmentusers extends Fragment  {
 
+    String TAG="fragmentusers";
+
     private RecyclerView recyclerView;
 
     private UserAdapter userAdapter;
     private List<Users> musers;
     String mobileText;
+
 
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> profileImageList= new ArrayList<>();
@@ -114,10 +117,12 @@ public class fragmentusers extends Fragment  {
 
                     while (iterator.hasNext()) {
                         DataSnapshot next = (DataSnapshot) iterator.next();
-                        // Log.i(TAG, "Value = " + next.child("userPhone").getValue());
+
+
+                        Log.i(TAG, "Value = " + next.child("userPhone").getValue());
                         String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
-                        System.out.println("Value= " + value);
-                        System.out.println("mobileText= " + mobileText);
+                        //System.out.println("Value= " + value);
+                        //System.out.println("mobileText= " + mobileText);
                         if (value != mobileText) {
                             profileNumberList.add(value);
                             reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
@@ -126,7 +131,7 @@ public class fragmentusers extends Fragment  {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                                     if (dataSnapshot1.exists()) {
                                         String ProfileName = Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
-                                       // String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
+                                        //String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
 
 
                                        // profileImageList.add(ImageUrl);

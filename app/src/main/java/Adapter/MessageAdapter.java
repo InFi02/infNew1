@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.infi_project.MessageActivity;
 import com.example.infi_project.R;
 import com.example.infi_project.data.model.Chat;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private List<Chat> mChats;
     String imageurl;
     FirebaseUser fuser;
+
 
     public MessageAdapter(Context mcontext,List<Chat> mChats,String imageurl){
 
@@ -122,6 +124,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemViewType(int position) {
+        fuser=FirebaseAuth.getInstance().getCurrentUser();
 
         if(mChats.get(position).getSender().equals(fuser.getPhoneNumber())){
             return msg_type_right;

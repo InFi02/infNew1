@@ -26,7 +26,7 @@ public class ChatTabPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
             case 0:
-                return new PrivateChatFragment();
+                return new fragmentusers();
             case 1:
                 return new PrivateGroupsFragment();
             case 2:

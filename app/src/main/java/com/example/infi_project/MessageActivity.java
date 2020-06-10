@@ -35,6 +35,11 @@ public class MessageActivity extends AppCompatActivity {
     CircleImageView profile_image;
     TextView username;
 
+    public String userNameText;
+    public String imageUrlText;
+    public String phone;
+
+
     FirebaseUser user;
     DatabaseReference reference;
     Intent intent;
@@ -73,11 +78,22 @@ public class MessageActivity extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        intent=getIntent();
-        final String phone=intent.getStringExtra("phone");
+        //start 002:- written by PAYAL , can not find context
+        // put under comment by Shivam Raj
+//        intent=getIntent();
+//        final String phone=intent.getStringExtra("phone");
 
-        Intent Message_intent = getIntent();
+        //ends 002;
+       Intent Message_intent = getIntent();
         final String mobileText = Message_intent.getStringExtra("mobileText");
+
+
+
+        intent=getIntent();
+        phone=intent.getStringExtra("phone");
+        userNameText=intent.getStringExtra("UserName");
+        imageUrlText=intent.getStringExtra("ImageUrl");
+
 
 
 
@@ -95,39 +111,46 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
 
-        profile_image=findViewById(R.id.profileImage);
-        username=findViewById(R.id.usernamee);
+        profile_image=findViewById(R.id.profile_image);
+        username=findViewById(R.id.usernameMessage);
+
+        username.setText(userNameText);
+        Glide.with(MessageActivity.this)
+                .asBitmap()
+                .load(imageUrlText)
+                .into(profile_image);
+
+        readMessages(mobileText,phone,imageUrlText);
 
 
 
-
-reference=FirebaseDatabase.getInstance().getReference("Users").child(phone);
-       reference.addValueEventListener(new ValueEventListener() {
-           @Override
-           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               Users user=dataSnapshot.getValue(Users.class);
-               username.setText(user.getUserName());
-               if(user.getImage().equals("default")){
-                   profile_image.setImageResource(R.mipmap.ic_launcher);
-               } else
-               Glide.with(MessageActivity.this).load(user.getImage());
-
-               readMessages(mobileText,phone,user.getImage());
-
-
-           }
-
-
-
-
-
-
-
-           @Override
-           public void onCancelled(@NonNull DatabaseError databaseError) {
-
-           }
-       });
+//        reference=FirebaseDatabase.getInstance().getReference("Users").child(phone);
+//        reference.addValueEventListener(new ValueEventListener() {
+//           @Override
+//           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//               Users user=dataSnapshot.getValue(Users.class);
+//               username.setText(user.getUserName());
+//               if(user.getImage().equals("default")){
+//                   profile_image.setImageResource(R.mipmap.ic_launcher);
+//               } else
+//               Glide.with(MessageActivity.this).load(user.getImage());
+//
+//               readMessages(mobileText,phone,user.getImage());
+//
+//
+//           }
+//
+//
+//
+//
+//
+//
+//
+//           @Override
+//           public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//           }
+//       });
 
     }
 
@@ -135,9 +158,10 @@ reference=FirebaseDatabase.getInstance().getReference("Users").child(phone);
 
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference();
         HashMap<String,Object> hashMap=new HashMap<>();
-        hashMap.put("sender",sender);
+
         hashMap.put("receiver",receiver);
         hashMap.put("message",message);
+        hashMap.put("sender",sender);
 
         reference.child("Chats").push().setValue(hashMap);
 
@@ -154,6 +178,7 @@ reference=FirebaseDatabase.getInstance().getReference("Users").child(phone);
 
                     Chat chat=snapshot.getValue(Chat.class);
                     if(chat.getReceiver().equals(myid) && chat.getSender().equals(userid) ||
+
                         chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
                         mchat.add(chat);
 

@@ -239,7 +239,7 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
     private void initProfieRecyclerView(){
         Log.d(TAG, "initProfileRecyclerView");
         RecyclerView profileRecyclerView= getView().findViewById(R.id.profileListRecycler);
-        ProfileListRecyclerViewAdapter profileAdapter= new ProfileListRecyclerViewAdapter(getContext(),profileNameList,profileAboutList,profileImageList);
+        ProfileListRecyclerViewAdapter profileAdapter= new ProfileListRecyclerViewAdapter(getContext(),profileNameList,profileAboutList,profileImageList,profileNumberList);
         profileRecyclerView.setAdapter(profileAdapter);
         profileRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         exploreProgressBar.setVisibility(View.GONE);

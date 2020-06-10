@@ -2,6 +2,7 @@ package com.example.infi_project;
 // Shivam Raj
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,12 +28,14 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> profileAboutList= new ArrayList<>();
     private ArrayList<String> profileImageList= new ArrayList<>();
+    private ArrayList<String> profileNumberList=new ArrayList<>();
     private Context mContext;
 
-    public ProfileListRecyclerViewAdapter(Context mContext, ArrayList<String> profileNameList, ArrayList<String> profileAboutList, ArrayList<String> profileImageList) {
+    public ProfileListRecyclerViewAdapter(Context mContext, ArrayList<String> profileNameList, ArrayList<String> profileAboutList, ArrayList<String> profileImageList,ArrayList<String> profileNumberList) {
         this.profileNameList = profileNameList;
         this.profileAboutList = profileAboutList;
         this.profileImageList = profileImageList;
+        this.profileNumberList=profileNumberList;
         this.mContext = mContext;
     }
 
@@ -61,6 +64,13 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: "+profileNameList.get(position));
                 Toast.makeText(mContext, profileNameList.get(position)+ " is Clicked", Toast.LENGTH_SHORT).show();
+                //to be removed:- start 001
+                Intent messageActivityIntent= new Intent(mContext, MessageActivity.class);
+                messageActivityIntent.putExtra("UserName", profileNameList.get(position));
+                messageActivityIntent.putExtra("ImageUrl", profileImageList.get(position));
+                messageActivityIntent.putExtra("phone", profileNumberList.get(position));
+                mContext.startActivity(messageActivityIntent);
+                // to be removed :-end 001
             }
         });
     }
