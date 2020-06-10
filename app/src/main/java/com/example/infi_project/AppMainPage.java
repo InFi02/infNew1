@@ -1,18 +1,23 @@
 package com.example.infi_project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,6 +27,8 @@ import com.example.infi_project.data.ChatTab;
 import com.example.infi_project.data.ExploreTab;
 import com.example.infi_project.data.FeedTab;
 import com.example.infi_project.data.ProfileTab;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,10 +40,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class AppMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    String TAG="AppMainPage";
 
     public TabLayout tabLayout;
     public ViewPager viewPager;
@@ -44,6 +52,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
     PagerAdapter pagerAdapter;
     ProgressBar progressBar;
     private ArrayList<String> interestNames = new ArrayList<>();
+
+    DatabaseReference RootRef;
     DatabaseReference reff;
     ImageView menU;
 
@@ -98,6 +108,7 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
 
 
+        RootRef= FirebaseDatabase.getInstance().getReference();
 
 
         reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
@@ -191,9 +202,77 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
                 break;
 
             }
+            case R.id.updateStatus: {
+                UpdateStatus();
+            }
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void UpdateStatus() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AppMainPage.this);
+        builder.setTitle("Update Your Status");
+        final EditText statusText= new EditText(AppMainPage.this);
+        statusText.setHint("Available");
+
+        RootRef.child("Status").child(mobileText).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String oldStatus=dataSnapshot.getValue().toString();
+                    statusText.setText(oldStatus);
+                    statusText.setHint("");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        builder.setView(statusText);
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String statusFinal=statusText.getText().toString();
+
+                int statusLength= statusFinal.length();
+
+                if (statusLength>20){
+                    Toast.makeText(AppMainPage.this, "Max Possible length is 20\n Update Failed" ,Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    uploadStatus(statusFinal);
+                }
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void uploadStatus(String statusFinal){
+        RootRef.child("Status").child(mobileText).setValue(statusFinal).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    Toast.makeText(AppMainPage.this, "Status Updated Successfully", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(AppMainPage.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, task.getException().toString());
+                }
+            }
+        });
     }
 
     private void Logout(){
@@ -235,8 +314,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                String userImage = dataSnapshot.child("image").getValue().toString();
-                String userName = dataSnapshot.child("userName").getValue().toString();
+                String userImage = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
+                String userName = Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString();
                 //String userAbout = dataSnapshot.child("about").getV
                 // alue().toString();
 

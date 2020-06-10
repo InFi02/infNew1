@@ -197,7 +197,7 @@ public class ProfileImagePicker extends DialogFragment  {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if(task.isSuccessful()){
-                                                            Toast.makeText(getContext(), "Profile Picture updated successfuly", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(getContext(), "Profile Picture updated successfully", Toast.LENGTH_SHORT).show();
                                                             Picasso.get().load(downloadUrl).placeholder(R.drawable.profile_image).into(profile);
                                                             Picasso.get().load(downloadUrl).placeholder(R.drawable.profile_image).into(profile_pic);
 
