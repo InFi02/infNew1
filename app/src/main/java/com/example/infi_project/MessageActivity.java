@@ -53,6 +53,7 @@ public class MessageActivity extends AppCompatActivity {
     List<Chat> mchat;
 
     RecyclerView recyclerView;
+    String mobileText;
 
 
 
@@ -84,11 +85,11 @@ public class MessageActivity extends AppCompatActivity {
 //        final String phone=intent.getStringExtra("phone");
 
         //ends 002;
-       Intent Message_intent = getIntent();
-        final String mobileText = Message_intent.getStringExtra("mobileText");
+//       Intent Message_intent = getIntent();
+//        final String mobileText = Message_intent.getStringExtra("mobileText");
 
-
-
+        fuser= FirebaseAuth.getInstance().getCurrentUser();
+        mobileText=fuser.getPhoneNumber();
         intent=getIntent();
         phone=intent.getStringExtra("phone");
         userNameText=intent.getStringExtra("UserName");
@@ -100,7 +101,7 @@ public class MessageActivity extends AppCompatActivity {
 
         btnsend=findViewById(R.id.btn_send);
         textsend=findViewById(R.id.text_end);
-        fuser= FirebaseAuth.getInstance().getCurrentUser();
+
 
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override

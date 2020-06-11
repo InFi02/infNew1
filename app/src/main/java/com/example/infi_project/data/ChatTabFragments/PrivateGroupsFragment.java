@@ -44,7 +44,8 @@ public class PrivateGroupsFragment extends Fragment {
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-
+                GroupCreateFragment myDialogFragment = new GroupCreateFragment();
+                myDialogFragment.show(getChildFragmentManager(), "MyFragment");
 
 
 

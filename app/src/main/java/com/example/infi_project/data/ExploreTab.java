@@ -5,6 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +32,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Vector;
@@ -36,6 +41,8 @@ import static androidx.recyclerview.widget.LinearLayoutManager.*;
 
 public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterCallback {
 
+
+    private SharedViewModel viewModel;
     public String mobileText;
     private ArrayList<String> interestNames= new ArrayList<>();
     private static final String TAG= "Explore:";
@@ -87,6 +94,8 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                         String interest= dataSnapshot.child("userInterest").child(interestNumber).getValue().toString();
                         interestNames.add(interest);
                     }
+
+                    viewModel.setInterestNames(interestNames);
                     interest_selected=interestNames.get(1);
 
                     initRecyclerView();
@@ -131,8 +140,19 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
 
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel= ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+            @Override
+            public void onChanged(ArrayList<String> strings) {
+                Collections.copy(interestNames,strings);
+                //interestNames=strings;
+            }
+        });
 
-
+    }
 
     @Override
     public void onMethodCallback(String interest) {
