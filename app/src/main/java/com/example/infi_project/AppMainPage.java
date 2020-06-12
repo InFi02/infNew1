@@ -1,11 +1,15 @@
 package com.example.infi_project;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.DialogInterface;
@@ -27,6 +31,7 @@ import com.example.infi_project.data.ChatTab;
 import com.example.infi_project.data.ExploreTab;
 import com.example.infi_project.data.FeedTab;
 import com.example.infi_project.data.ProfileTab;
+import com.example.infi_project.data.SharedViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -40,11 +45,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 
 public class AppMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     String TAG="AppMainPage";
+
+    public SharedViewModel viewModel;
+
 
     public TabLayout tabLayout;
     public ViewPager viewPager;
@@ -67,6 +76,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_main_page);
+
+        viewModel=new ViewModelProvider(AppMainPage.this).get(SharedViewModel.class);
 
         toolbar = findViewById(R.id.myToolBar);
         tabLayout = findViewById(R.id.tabLayout);
@@ -130,10 +141,26 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 //                    finish();
                         progressBar.setVisibility(View.GONE);
                         viewPager.setVisibility(View.VISIBLE);
+                        String interestNoText=dataSnapshot.child("totalNoOfInterest").getValue().toString();
+                        int interestNo=Integer.parseInt(interestNoText);
+                        for (int i=0; i<interestNo; i++){
+                            String interestNumber= String.valueOf(i);
+                            String interest= dataSnapshot.child("userInterest").child(interestNumber).getValue().toString();
+                            interestNames.add(interest);
+                        }
+
+                        viewModel.setInterestNames(interestNames);
 
 
                     }
                 }
+
+                viewModel.getInterestNames().observe(AppMainPage.this, new Observer<ArrayList<String>>() {
+                    @Override
+                    public void onChanged(ArrayList<String> strings) {
+                        interestNames.addAll(strings);
+                    }
+                });
             }
 
             @Override
@@ -175,6 +202,20 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 //        });
 
     }
+
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        viewModel= ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+//        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+//            @Override
+//            public void onChanged(ArrayList<String> strings) {
+//                Collections.copy(interestNames,strings);
+//                //interestNames=strings;
+//            }
+//        });
+//
+//    }
 
 
 
