@@ -24,6 +24,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.infi_project.AppMainPage;
 import com.example.infi_project.R;
 import com.example.infi_project.data.SharedViewModel;
 
@@ -34,7 +35,7 @@ import java.util.Collections;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class GroupCreateFragment extends Fragment {
+public class GroupCreateFragment extends DialogFragment {
 
     String TAG="GroupCreateFragment";
 
@@ -44,7 +45,7 @@ public class GroupCreateFragment extends Fragment {
     private int interestLength;
 
     private SharedViewModel viewModel;
-    private ArrayList<String> interestNames1= new ArrayList<>();
+    private ArrayList<String> interestNames1= new ArrayList<String>();
 
 
     public GroupCreateFragment() {
@@ -54,6 +55,8 @@ public class GroupCreateFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel= new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+
 
     }
 
@@ -63,7 +66,27 @@ public class GroupCreateFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group_create, container, false);
         interestRadioGroup=view.findViewById(R.id.radioGroupInterest);
-        addRadioButtons();
+        //groupName.setText(interestNames.get(1));
+
+        //viewModel= new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+//        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+//            @Override
+//            public void onChanged(ArrayList<String> strings) {
+//
+//                interestNames1.clear();
+//                interestNames1.addAll(strings);
+//            }
+//
+//        });
+        AppMainPage activity= (AppMainPage) getActivity(); // should be replaced with better methods
+        interestNames1.clear();
+        assert activity != null;
+        interestNames1.addAll(activity.sendInterest());
+
+
+        interestLength=interestNames1.size();
+        // addRadioButtons();
+        //addRadioButtons();
 
         return view;
     }
@@ -89,19 +112,19 @@ public class GroupCreateFragment extends Fragment {
         //System.out.println(interestNames.get(0));
 
         groupName=getView().findViewById(R.id.groupName);
-        interestRadioGroup=getView().findViewById(R.id.radioGroupInterest);
-        //groupName.setText(interestNames.get(1));
-
-        viewModel= new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-
-                interestNames1.clear();
-                interestNames1.addAll(strings);
-            }
-
-        });
+//        interestRadioGroup=getView().findViewById(R.id.radioGroupInterest);
+//        //groupName.setText(interestNames.get(1));
+//
+//        viewModel= new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+//        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+//            @Override
+//            public void onChanged(ArrayList<String> strings) {
+//
+//                interestNames1.clear();
+//                interestNames1.addAll(strings);
+//            }
+//
+//        });
 
         interestLength=interestNames1.size();
         addRadioButtons();

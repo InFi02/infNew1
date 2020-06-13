@@ -96,7 +96,7 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                         interestNames.add(interest);
                     }
 
-                    viewModel.setInterestNames(interestNames);
+                    //iiviewModel.setInterestNames(interestNames);
                     interest_selected=interestNames.get(1);
 
                     initRecyclerView();
