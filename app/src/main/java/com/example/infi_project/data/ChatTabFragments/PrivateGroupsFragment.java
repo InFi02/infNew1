@@ -47,12 +47,14 @@ public class PrivateGroupsFragment extends Fragment {
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                GroupCreateFragment myGroupFragment = new GroupCreateFragment();
-                //myDialogFragment.show(getChildFragmentManager(), "MyFragment");
-                FragmentTransaction fragmentTransaction=getChildFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.group_fragment_container, new GroupCreateFragment());
-                fragmentTransaction.commit();
-                fab.setVisibility(View.GONE);
+//                GroupCreateFragment myGroupFragment = new GroupCreateFragment();
+                GroupCreateFragment myDialogFragment = new GroupCreateFragment();
+
+                myDialogFragment.show(getChildFragmentManager(), "MyFragment");
+//                FragmentTransaction fragmentTransaction=getChildFragmentManager().beginTransaction();
+//                fragmentTransaction.add(R.id.group_fragment_container, new GroupCreateFragment());
+//                fragmentTransaction.commit();
+//                fab.setVisibility(View.GONE);
 
 
 

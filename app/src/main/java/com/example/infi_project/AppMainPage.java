@@ -60,7 +60,7 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
     public Toolbar toolbar;
     PagerAdapter pagerAdapter;
     ProgressBar progressBar;
-    private ArrayList<String> interestNames = new ArrayList<>();
+    private ArrayList<String> interestNames = new ArrayList<String>();
 
     DatabaseReference RootRef;
     DatabaseReference reff;
@@ -149,18 +149,18 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
                             interestNames.add(interest);
                         }
 
-                        viewModel.setInterestNames(interestNames);
+                        //viewModel.setInterestNames(interestNames);
 
 
                     }
                 }
 
-                viewModel.getInterestNames().observe(AppMainPage.this, new Observer<ArrayList<String>>() {
-                    @Override
-                    public void onChanged(ArrayList<String> strings) {
-                        interestNames.addAll(strings);
-                    }
-                });
+//                viewModel.getInterestNames().observe(AppMainPage.this, new Observer<ArrayList<String>>() {
+//                    @Override
+//                    public void onChanged(ArrayList<String> strings) {
+//                        interestNames.addAll(strings);
+//                    }
+//                });
             }
 
             @Override
@@ -325,6 +325,10 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
     public String sendData(){
         return mobileText;
+    }
+
+    public ArrayList<String> sendInterest(){
+        return interestNames;
     }
 
     @Override
