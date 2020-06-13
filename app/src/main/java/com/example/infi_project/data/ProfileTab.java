@@ -32,7 +32,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 
-public class ProfileTab extends Fragment {
+public class
+
+ProfileTab extends Fragment {
 
 
 

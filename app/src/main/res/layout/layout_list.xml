@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="1dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="4dp"
+        app:cardMaxElevation="2dp"
+        app:cardElevation="1dp"
+        android:layout_centerInParent="true">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imagecard"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/booksimage"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="120dp"
+                android:id="@+id/titleprofile"
+                android:autoSizeMaxTextSize="30sp"
+                android:autoSizeMinTextSize="20sp"
+                android:gravity="center"
+                android:text="MEOW"
+                android:textColor="#000"
+
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+
+
+
+
+
+        </RelativeLayout>
+        
+        
+        
+        
+        
+        
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
