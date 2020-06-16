@@ -73,6 +73,7 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
 
         AppMainPage activity= (AppMainPage) getActivity();
         mobileText=activity.sendData();
+        viewModel=new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
         reff= FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
         reff.addValueEventListener(new ValueEventListener() {
@@ -95,7 +96,7 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
                         interestNames.add(interest);
                     }
 
-                    viewModel.setInterestNames(interestNames);
+                    //iiviewModel.setInterestNames(interestNames);
                     interest_selected=interestNames.get(1);
 
                     initRecyclerView();
@@ -140,19 +141,20 @@ public class ExploreTab extends Fragment implements RecyclerViewAdapter.AdapterC
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        viewModel= ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
-        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
-            @Override
-            public void onChanged(ArrayList<String> strings) {
-                Collections.copy(interestNames,strings);
-                //interestNames=strings;
-            }
-        });
-
-    }
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        viewModel= ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+//        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+//            @Override
+//            public void onChanged(ArrayList<String> strings) {
+////                Collections.copy(interestNames,strings);
+//                //interestNames=strings;
+//                interestNames.addAll(strings);
+//            }
+//        });
+//
+//    }
 
     @Override
     public void onMethodCallback(String interest) {

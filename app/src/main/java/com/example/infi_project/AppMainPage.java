@@ -1,19 +1,27 @@
 package com.example.infi_project;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +31,9 @@ import com.example.infi_project.data.ChatTab;
 import com.example.infi_project.data.ExploreTab;
 import com.example.infi_project.data.FeedTab;
 import com.example.infi_project.data.ProfileTab;
+import com.example.infi_project.data.SharedViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,10 +45,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Objects;
 
 
 public class AppMainPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    String TAG="AppMainPage";
+
+    public SharedViewModel viewModel;
 
 
     public TabLayout tabLayout;
@@ -45,7 +60,9 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
     public Toolbar toolbar;
     PagerAdapter pagerAdapter;
     ProgressBar progressBar;
-    private ArrayList<String> interestNames = new ArrayList<>();
+    private ArrayList<String> interestNames = new ArrayList<String>();
+
+    DatabaseReference RootRef;
     DatabaseReference reff;
     ImageView menU;
 
@@ -58,78 +75,101 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_app_main_page);
 
-            setContentView(R.layout.activity_app_main_page);
+        viewModel=new ViewModelProvider(AppMainPage.this).get(SharedViewModel.class);
 
-            toolbar = findViewById(R.id.myToolBar);
-            tabLayout = findViewById(R.id.tabLayout);
-            viewPager = findViewById(R.id.pager);
-            pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-            viewPager.setAdapter(pagerAdapter);
-            progressBar = findViewById(R.id.progressBarApp);
-            tabLayout.setupWithViewPager(viewPager);
-
-
-            Intent appMainPage_intent = getIntent();
-            mobileText = appMainPage_intent.getStringExtra("mobileText");
+        toolbar = findViewById(R.id.myToolBar);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.pager);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        progressBar = findViewById(R.id.progressBarApp);
+        tabLayout.setupWithViewPager(viewPager);
 
 
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("");
+        Intent appMainPage_intent = getIntent();
+        mobileText = appMainPage_intent.getStringExtra("mobileText");
 
-            drawerLayout = findViewById(R.id.drawer_layout);
-            navigationView = findViewById(R.id.navigation_menu);
 
-            navigationView.bringToFront();
-            navigationView.setNavigationItemSelectedListener(this);
-            menU = findViewById(R.id.menuic);
 
-            usinfo();
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
 
-            menU.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                    } else {
-                        drawerLayout.openDrawer(GravityCompat.START);
-                    }
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_menu);
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+        menU = findViewById(R.id.menuic);
+
+        usinfo();
+
+        menU.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
                 }
-            });
+            }
+        });
 
 
-            reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
-            reff.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.child("choiceSelected").getValue() != null) {
-                        String interestSelected = dataSnapshot.child("choiceSelected").getValue().toString();
-                        if (interestSelected != "true") {
-                            Intent interest_intent = new Intent(AppMainPage.this, Interest_Part.class);
-                            interest_intent.putExtra("mobileText", mobileText);
-                            startActivity(interest_intent);
-                            finish();
-                        } else {
+
+
+        RootRef= FirebaseDatabase.getInstance().getReference();
+
+
+        reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
+        reff.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child("choiceSelected").getValue() != null) {
+                    String interestSelected = dataSnapshot.child("choiceSelected").getValue().toString();
+                    if (interestSelected != "true") {
+                        Intent interest_intent = new Intent(AppMainPage.this, Interest_Part.class);
+                        interest_intent.putExtra("mobileText", mobileText);
+                        startActivity(interest_intent);
+                        finish();
+                    } else {
 //                    Intent interest_intent= new Intent(AppMainPage.this, Interest_Part.class);
 //                    Toast.makeText(AppMainPage.this, interestSelected+"aaaaaa", Toast.LENGTH_LONG).show();
 //                    interest_intent.putExtra("mobileText", mobileText);
 //                    startActivity(interest_intent);
 //                    finish();
-                            progressBar.setVisibility(View.GONE);
-                            viewPager.setVisibility(View.VISIBLE);
-
-
+                        progressBar.setVisibility(View.GONE);
+                        viewPager.setVisibility(View.VISIBLE);
+                        String interestNoText=dataSnapshot.child("totalNoOfInterest").getValue().toString();
+                        int interestNo=Integer.parseInt(interestNoText);
+                        for (int i=0; i<interestNo; i++){
+                            String interestNumber= String.valueOf(i);
+                            String interest= dataSnapshot.child("userInterest").child(interestNumber).getValue().toString();
+                            interestNames.add(interest);
                         }
+
+                        //viewModel.setInterestNames(interestNames);
+
+
                     }
                 }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                viewModel.getInterestNames().observe(AppMainPage.this, new Observer<ArrayList<String>>() {
+//                    @Override
+//                    public void onChanged(ArrayList<String> strings) {
+//                        interestNames.addAll(strings);
+//                    }
+//                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
 
-                }
+            }
 
-            });
+        });
 
 
 //        tabLayout=(TabLayout)findViewById(R.id.tabLayout);
@@ -161,22 +201,21 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 //            }
 //        });
 
-            refresh(1000);
-
-        }
-
-
-    private void refresh(int millisec){
-
-        final Handler handler=new Handler();
-        final Runnable runnable=new Runnable() {
-            @Override
-            public void run() {
-
-
-            }
-        };
     }
+
+//    @Override
+//    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+//        super.onActivityCreated(savedInstanceState);
+//        viewModel= ViewModelProviders.of(getActivity()).get(SharedViewModel.class);
+//        viewModel.getInterestNames().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+//            @Override
+//            public void onChanged(ArrayList<String> strings) {
+//                Collections.copy(interestNames,strings);
+//                //interestNames=strings;
+//            }
+//        });
+//
+//    }
 
 
 
@@ -204,9 +243,77 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
                 break;
 
             }
+            case R.id.updateStatus: {
+                UpdateStatus();
+            }
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void UpdateStatus() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(AppMainPage.this);
+        builder.setTitle("Update Your Status");
+        final EditText statusText= new EditText(AppMainPage.this);
+        statusText.setHint("Available");
+
+        RootRef.child("Status").child(mobileText).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String oldStatus=dataSnapshot.getValue().toString();
+                    statusText.setText(oldStatus);
+                    statusText.setHint("");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        builder.setView(statusText);
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String statusFinal=statusText.getText().toString();
+
+                int statusLength= statusFinal.length();
+
+                if (statusLength>20){
+                    Toast.makeText(AppMainPage.this, "Max Possible length is 20\n Update Failed" ,Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    uploadStatus(statusFinal);
+                }
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void uploadStatus(String statusFinal){
+        RootRef.child("Status").child(mobileText).setValue(statusFinal).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    Toast.makeText(AppMainPage.this, "Status Updated Successfully", Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(AppMainPage.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    Log.i(TAG, task.getException().toString());
+                }
+            }
+        });
     }
 
     private void Logout(){
@@ -218,6 +325,10 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
     public String sendData(){
         return mobileText;
+    }
+
+    public ArrayList<String> sendInterest(){
+        return interestNames;
     }
 
     @Override
@@ -248,8 +359,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
-                String userImage = dataSnapshot.child("image").getValue().toString();
-                String userName = dataSnapshot.child("userName").getValue().toString();
+                String userImage = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
+                String userName = Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString();
                 //String userAbout = dataSnapshot.child("about").getV
                 // alue().toString();
 
