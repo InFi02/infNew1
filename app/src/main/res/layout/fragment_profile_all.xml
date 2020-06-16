@@ -2,22 +2,40 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/back0"
     tools:context=".data.model.ProfileAll">
 
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+
+
+
+
+        
+
+
+
 
        <androidx.recyclerview.widget.RecyclerView
            android:layout_width="match_parent"
-           android:layout_height="match_parent"
+           android:layout_height="wrap_content"
            app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintVertical_bias="0.0"
            app:layout_constraintTop_toTopOf="parent"
-           android:id="@+id/allrecycle"
-           android:orientation="horizontal">
+           android:id="@+id/recyclerview">
 
 
        </androidx.recyclerview.widget.RecyclerView>
@@ -30,5 +48,7 @@
 
 
    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </FrameLayout>

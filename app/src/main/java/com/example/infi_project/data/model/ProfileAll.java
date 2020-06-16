@@ -20,11 +20,19 @@ import com.example.infi_project.RecyclerViewAdapter;
 
 import java.util.ArrayList;
 
+import Adapter.Horizontal_Recyler_View;
 import Adapter.Profile_All_Recycle_Adapter;
+import Adapter.Vertical_Recycler_View_Adapter;
+import Models.HorizontalModel;
+import Models.VerticalModel;
 
 public class ProfileAll extends Fragment {
 
     private static final String TAG = "Profile_All_Fragment";
+    RecyclerView verticalRecyclerView;
+    Vertical_Recycler_View_Adapter adapter;
+
+  private  ArrayList<VerticalModel> arrayListVertical;
 
     private ArrayList<String> mTitles = new ArrayList<>();
     private ArrayList<String> mImageUrls = new ArrayList<>();
@@ -53,10 +61,52 @@ public class ProfileAll extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getImages();
+      //getImages();
+        initVerticleRecyclerView();
     }
 
-    private void getImages() {
+    private void initVerticleRecyclerView() {
+
+        arrayListVertical=new ArrayList<>();
+
+        verticalRecyclerView=(RecyclerView)getView().findViewById(R.id.recyclerview);
+        verticalRecyclerView.setHasFixedSize(true);
+        verticalRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
+
+        adapter=new Vertical_Recycler_View_Adapter(getContext(),arrayListVertical);
+        verticalRecyclerView.setAdapter(adapter);
+
+        setData();
+
+
+    }
+
+    private void setData() {
+
+        for(int i=1;i<=5;i++){
+
+            VerticalModel verticalModel=new VerticalModel();
+            verticalModel.setTitle("Title"+i);
+
+            ArrayList<HorizontalModel> arrayListHorizontal=new ArrayList<>();
+            for(int j=0;j<5;j++){
+
+                HorizontalModel horizontalModel=new HorizontalModel();
+                horizontalModel.setTitle("Description"+j);
+
+                arrayListHorizontal.add(horizontalModel);
+
+
+            }
+
+            verticalModel.setArrayList(arrayListHorizontal);
+            arrayListVertical.add(verticalModel);
+
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+ /* private void getImages() {
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
         mImageUrls.add("https://c1.staticflickr.com/5/4636/25316407448_de5fbf183d_o.jpg");
@@ -90,9 +140,9 @@ public class ProfileAll extends Fragment {
 
         initRecyclerView();
 
-    }
+    }*/
 
-    private void initRecyclerView() {
+  /*private void initRecyclerView() {
         Log.d(TAG, "initRecyclerView: init recyclerview");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -101,5 +151,6 @@ public class ProfileAll extends Fragment {
         Profile_All_Recycle_Adapter adapter = new Profile_All_Recycle_Adapter(getContext(), mTitles, mImageUrls);
         recyclerView.setAdapter(adapter);
     }
+   */
 }
 
