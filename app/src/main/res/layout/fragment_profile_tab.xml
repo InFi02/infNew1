@@ -31,6 +31,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+
+
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
@@ -44,8 +46,39 @@
                 android:fontFamily="@font/alegreya_sans_black_italic"/>
 
             <Button
+                android:id="@+id/connects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounbutton"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="150dp"
+                android:text="Connect"
+                android:fontFamily="@font/alegreya_sans_black_italic">
+
+            </Button>
+
+            <Button
                 android:id="@+id/check"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/name"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounbutton"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginLeft="150dp"
+                android:text="Message"
+                android:fontFamily="@font/alegreya_sans_black_italic">
+
+            </Button>
+
+
+            /*
+              //  android:id="@+id/check"
+               // android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/name"
                 android:layout_marginTop="20dp"
@@ -53,10 +86,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
 
-                android:text="See how your profile looks like"
-                android:fontFamily="@font/alegreya_sans_black_italic">
+               // android:text="See how your profile looks like"
+              //  android:fontFamily="@font/alegreya_sans_black_italic">
 
-            </Button>
+            */
+
 
 
 
