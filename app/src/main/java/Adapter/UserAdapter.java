@@ -60,7 +60,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         if(profileImageList.get(position).equals("default")){
            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         } else {
-            System.out.println("Payal is the best");
+            System.out.println("I am  the best");
 
 
             Glide.with(mcontext)
