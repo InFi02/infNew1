@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,14 +57,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         //    holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         //} else {
 
-        if(profileImageList.equals("default")){
+        if(profileImageList.get(position).equals("default")){
            holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         } else {
+            System.out.println("Payal is the best");
 
 
             Glide.with(mcontext)
                     .asBitmap()
-                    .load(profileImageList)
+                    .load(profileImageList.get(position))
                     .into(holder.profile_image);
         }
 
@@ -75,6 +77,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
                 Intent intent= new Intent(mcontext, MessageActivity.class);
                 intent.putExtra("phone",profilePhoneList.get(position));
+                intent.putExtra("USERNAME",profileNameList.get(position));
+                intent.putExtra("ImageUrl",profileImageList.get(position));
+
                 mcontext.startActivity(intent);
 
 

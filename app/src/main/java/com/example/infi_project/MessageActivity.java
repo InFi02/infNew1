@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import Adapter.MessageAdapter;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,6 +46,7 @@ public class MessageActivity extends AppCompatActivity {
 
     FirebaseUser user;
     DatabaseReference reference;
+    DatabaseReference details;
     Intent intent;
 
     FirebaseUser fuser;
@@ -54,6 +59,10 @@ public class MessageActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String mobileText;
+
+    String mynumber;
+
+    String oppno,usernamee,image;
 
 
 
@@ -90,10 +99,47 @@ public class MessageActivity extends AppCompatActivity {
 
         fuser= FirebaseAuth.getInstance().getCurrentUser();
         mobileText=fuser.getPhoneNumber();
+        mynumber=mobileText.toString();
         intent=getIntent();
         phone=intent.getStringExtra("phone");
-        userNameText=intent.getStringExtra("UserName");
+        //Toast.makeText(MessageActivity.this,"pho",Toast.LENGTH_SHORT).show();
+
+      /*  details=FirebaseDatabase.getInstance().getReference().child("userDetails").child(phone);
+        details.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    //Toast.makeText(MessageActivity.this,"meow",Toast.LENGTH_SHORT).show();
+
+
+                    userNameText= Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString();
+                    imageUrlText=Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
+                    usernamee=userNameText.toString();
+                    image=imageUrlText.toString();
+                  //  Toast.makeText(MessageActivity.this,usernamee,Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+       */
+        userNameText=intent.getStringExtra("USERNAME");
         imageUrlText=intent.getStringExtra("ImageUrl");
+
+        //Toast.makeText(MessageActivity.this,usernamee,Toast.LENGTH_SHORT).show();
+
+        oppno=phone.toString();
+        usernamee=userNameText.toString();
+        image=imageUrlText.toString();
+       // Uri uri=Uri.parse("https://www.google.com/url?sa=i&url=https%3A%2F%2Ftimesofindia.indiatimes.com%2Ftravel%2Fdestinations%2Fbangalore-in-pictures%2Fslideshow_list%2F54559212.cms&psig=AOvVaw39u5U0xXrEjdIK0SjjNzdA&ust=1592860998123000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiUzuPrk-oCFQAAAAAdAAAAABAD");
+
+
 
 
 
@@ -106,9 +152,13 @@ public class MessageActivity extends AppCompatActivity {
         btnsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg=textsend.getText().toString();
-                if(!msg.equals(""))
-                 sendMessage(mobileText,phone,msg);
+                String msg = textsend.getText().toString();
+                if (!msg.equals(""))
+                    sendMessage(mynumber, oppno, msg);
+
+                else {
+                    Toast.makeText(MessageActivity.this, "Write a message", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -118,10 +168,10 @@ public class MessageActivity extends AppCompatActivity {
         username.setText(userNameText);
         Glide.with(MessageActivity.this)
                 .asBitmap()
-                .load(imageUrlText)
+                .load(image)
                 .into(profile_image);
 
-        readMessages(mobileText,phone,imageUrlText);
+        readMessages(mynumber,oppno,image);
 
 
 
@@ -165,6 +215,8 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("sender",sender);
 
         reference.child("Chats").push().setValue(hashMap);
+        textsend.setText("");
+
 
     }
 
@@ -182,6 +234,7 @@ public class MessageActivity extends AppCompatActivity {
 
                         chat.getReceiver().equals(userid) && chat.getSender().equals(myid)){
                         mchat.add(chat);
+
 
 
                     }

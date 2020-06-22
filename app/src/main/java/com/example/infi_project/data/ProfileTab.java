@@ -42,6 +42,8 @@ ProfileTab extends Fragment {
 
 
 
+    public Button Message;
+    public Button Connect;
 
     public TabLayout tabLayout;
     public ViewPager viewPager;
@@ -94,13 +96,15 @@ ProfileTab extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         fragmentManager=getChildFragmentManager();
-        viewp = getView().findViewById(R.id.check);
+       // viewp = getView().findViewById(R.id.check);
         profile_pic = getView().findViewById(R.id.imageView10);
         namee = getView().findViewById(R.id.name);
+        Message = getView().findViewById(R.id.messages);
+        Connect = getView().findViewById(R.id.connects);
 
         RetrieveUserInfo();
 
-        viewp.setOnClickListener(new View.OnClickListener() {
+     /*   viewp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -116,6 +120,10 @@ ProfileTab extends Fragment {
 
             }
         });
+
+      */
+
+
 
         profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
