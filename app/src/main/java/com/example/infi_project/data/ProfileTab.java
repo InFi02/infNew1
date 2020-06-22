@@ -1,5 +1,6 @@
 package com.example.infi_project.data;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.infi_project.AppMainPage;
+import com.example.infi_project.MessageActivity;
 import com.example.infi_project.ProfileForUsers;
 import com.example.infi_project.R;
 import com.example.infi_project.data.model.ProfileImagePicker;
@@ -31,6 +33,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 
 public class
@@ -141,10 +145,64 @@ ProfileTab extends Fragment {
 
         });
 
+        if(value.equals(mobileText)) {
+            Connect.setVisibility(View.INVISIBLE);
+            Message.setVisibility(View.INVISIBLE);
+        }
+
 
         Message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                DatabaseReference checkreq;
+                checkreq = FirebaseDatabase.getInstance().getReference().child("Connections");
+                checkreq.child(mobileText).child("connected").child(value).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            DatabaseReference muser=FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
+                            muser.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        String ProfileName = Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString();
+                                        String ImageUrl = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
+
+                                        Intent intent=new Intent(getContext(), MessageActivity.class);
+                                        intent.putExtra("phone",value);
+                                        intent.putExtra("USERNAME",ProfileName);
+                                        intent.putExtra("ImageUrl",ImageUrl);
+                                        startActivity(intent);
+                                }
+
+
+                            }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+
+                                });
+                           }
+
+
+
+
+                      else{
+                            Toast.makeText(getContext(),"You aren't connected yet",Toast.LENGTH_SHORT).show();
+                       }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
 
 
             }
@@ -153,10 +211,54 @@ ProfileTab extends Fragment {
         Connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseReference checkreq;
+                final boolean[] con = {false, false};
 
+                checkreq = FirebaseDatabase.getInstance().getReference().child("Connections");
+                checkreq.child(mobileText).child("connected").child(value).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            con[0] = true;
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                checkreq.child(mobileText).child("sent").child(value).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            con[1] = true;
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                if (con[0]) {
+                    Toast.makeText(getContext(), "You are already connected", Toast.LENGTH_SHORT).show();
+                } else if (con[1]) {
+                    Toast.makeText(getContext(), "You have already sent a connection request", Toast.LENGTH_SHORT).show();
+                } else {
+                    checkreq.child(mobileText).child("sent").child(value).setValue("0");
+                    checkreq.child(value).child("recieved").child(mobileText).setValue("0");
+                    Toast.makeText(getContext(),"Connection Request Sent Succesfully",Toast.LENGTH_SHORT).show();
+
+
+                }
             }
         });
-    }
+        }
+
 
 
 
