@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.infi_project.AppMainPage;
 import com.example.infi_project.ProfileForUsers;
@@ -37,11 +38,6 @@ public class
 ProfileTab extends Fragment {
 
 
-
-
-
-
-
     public Button Message;
     public Button Connect;
 
@@ -59,50 +55,57 @@ ProfileTab extends Fragment {
     public TextView namee;
     DatabaseReference reff;
     String userImage;
+    String value;
+    String number;
 
     public ProfileTab() {
         // Required empty public constructor
     }
 
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppMainPage activity= (AppMainPage) getActivity();
-        mobileText=activity.sendData();
+        AppMainPage activity = (AppMainPage) getActivity();
+        mobileText = activity.sendData();
 
 
-        }
-
+    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        value = getArguments() != null ? getArguments().getString("profileno") : mobileText;
+
         return inflater.inflate(R.layout.fragment_profile_tab, container, false);
     }
 
     public void onViewCreated(View v, @Nullable Bundle savedInstanceState) {
 
-        tabLayout=getView().findViewById(R.id.tabLayout1);
-        viewPager=getView().findViewById(R.id.pager1);
-        pagerAdapterprofile=new PagerAdapterProfile(getChildFragmentManager());
+        //  Toast.makeText(getContext(),value,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(),value,Toast.LENGTH_SHORT).show();
+
+        tabLayout = getView().findViewById(R.id.tabLayout1);
+        viewPager = getView().findViewById(R.id.pager1);
+        pagerAdapterprofile = new PagerAdapterProfile(getChildFragmentManager());
         viewPager.setAdapter(pagerAdapterprofile);
 
 
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        fragmentManager=getChildFragmentManager();
-       // viewp = getView().findViewById(R.id.check);
+        fragmentManager = getChildFragmentManager();
+        // viewp = getView().findViewById(R.id.check);
         profile_pic = getView().findViewById(R.id.imageView10);
         namee = getView().findViewById(R.id.name);
-        Message = getView().findViewById(R.id.messages);
+        Message = getView().findViewById(R.id.check);
         Connect = getView().findViewById(R.id.connects);
 
-        RetrieveUserInfo();
+
+        RetrieveUserInfo(value);
+
+
 
      /*   viewp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +127,6 @@ ProfileTab extends Fragment {
       */
 
 
-
         profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,12 +135,28 @@ ProfileTab extends Fragment {
                 ProfileImagePicker myDialogFragment = new ProfileImagePicker();
                 myDialogFragment.show(getChildFragmentManager(), "MyFragment");
 
-                RetrieveUserInfo();
+                RetrieveUserInfo(mobileText);
                 System.out.println("Hello World");
             }
 
-            });
-                                }
+        });
+
+
+        Message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+            }
+        });
+
+        Connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
 
 
 
@@ -168,12 +186,12 @@ ProfileTab extends Fragment {
                 transaction.commit();*/
 
 
-
-    private void RetrieveUserInfo() {
+    private void RetrieveUserInfo(String mobileText) {
+        Toast.makeText(getContext(), mobileText, Toast.LENGTH_SHORT).show();
+        System.out.println(mobileText);
 
         reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
-        reff.addValueEventListener(new ValueEventListener()
-        {
+        reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -198,10 +216,15 @@ ProfileTab extends Fragment {
         });
     }
 
-    public ImageView sData(){
+    public ImageView sData() {
         return profile_pic;
     }
+
+
+    public String sendnumber() {
+        return value;
     }
+}
 
 
 

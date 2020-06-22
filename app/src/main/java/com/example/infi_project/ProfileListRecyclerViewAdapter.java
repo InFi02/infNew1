@@ -3,6 +3,7 @@ package com.example.infi_project;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.infi_project.data.ProfileTab;
 
 import java.util.ArrayList;
 
@@ -65,12 +68,28 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
                 Log.d(TAG, "onClick: clicked on: "+profileNameList.get(position));
                 Toast.makeText(mContext, profileNameList.get(position)+ " is Clicked", Toast.LENGTH_SHORT).show();
                 //to be removed:- start 001
-                Intent messageActivityIntent= new Intent(mContext, MessageActivity.class);
-                messageActivityIntent.putExtra("UserName", profileNameList.get(position));
-                messageActivityIntent.putExtra("ImageUrl", profileImageList.get(position));
-                messageActivityIntent.putExtra("phone", profileNumberList.get(position));
-                mContext.startActivity(messageActivityIntent);
+               // Intent messageActivityIntent= new Intent(mContext, MessageActivity.class);
+                //messageActivityIntent.putExtra("UserName", profileNameList.get(position));
+                //messageActivityIntent.putExtra("ImageUrl", profileImageList.get(position));
+                //messageActivityIntent.putExtra("phone", profileNumberList.get(position));
+                //mContext.startActivity(messageActivityIntent);
                 // to be removed :-end 001
+
+
+
+                ProfileTab ldf = new ProfileTab ();
+                Bundle args = new Bundle();
+                args.putString("profileno", profileNumberList.get(position));
+                ldf.setArguments(args);
+                AppMainPage activity=(AppMainPage)v.getContext();
+
+                //Inflate the fragment
+               // FragmentTransaction transaction = fragmentManager.beginTransaction();
+               activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ldf).addToBackStack(null).commit();
+
+
+
+
             }
         });
     }

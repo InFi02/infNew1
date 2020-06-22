@@ -1,7 +1,9 @@
 package com.example.infi_project;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.infi_project.data.ExploreTab;
+import com.example.infi_project.data.ProfileTab;
 
 import java.util.ArrayList;
 
@@ -81,6 +84,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
                         Log.d(TAG, "onClick: clicked "+interestNames.get(position));
+
+
+
                         //Toast.makeText(mContext, "Clicked"+interestNames.get(position), Toast.LENGTH_SHORT).show();
                         if (interestNames.get(position)!=null) {
                             interest_selected = interestNames.get(position);

@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.infi_project.R;
+import com.example.infi_project.data.ProfileTab;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -67,8 +68,11 @@ public class HighlightsProfile extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        fuser= FirebaseAuth.getInstance().getCurrentUser();
-        mobileText=fuser.getPhoneNumber();
+        ProfileTab frag=(ProfileTab) getParentFragment();
+        mobileText=frag.sendnumber();
+
+        //fuser= FirebaseAuth.getInstance().getCurrentUser();
+        //mobileText=fuser.getPhoneNumber();
         profileid=mobileText.toString();
 
         initRecyclerView();
