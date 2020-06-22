@@ -2,6 +2,7 @@ package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
 
     private Context mcontext;
+   // private ArrayList<String> profileImageList= new ArrayList<>();
    // private ArrayList<String> profileNameList= new ArrayList<>();
     //private ArrayList<String> profilePhoneList= new ArrayList<>();
 
@@ -38,6 +40,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private List<Chat> mChats;
     String imageurl;
     FirebaseUser fuser;
+
+    Uri uri=Uri.parse("https://www.google.com/url?sa=i&url=https%3A%2F%2Ftimesofindia.indiatimes.com%2Ftravel%2Fdestinations%2Fbangalore-in-pictures%2Fslideshow_list%2F54559212.cms&psig=AOvVaw39u5U0xXrEjdIK0SjjNzdA&ust=1592860998123000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIiUzuPrk-oCFQAAAAAdAAAAABAD");
+
 
 
     public MessageAdapter(Context mcontext,List<Chat> mChats,String imageurl){
@@ -84,12 +89,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Chat chat=mChats.get(position);
         holder.show_message.setText(chat.getMessage());
 
-        if(imageurl.equals("default")){
+        if(imageurl.isEmpty()){
 
             holder.profile_image.setImageResource(R.mipmap.ic_launcher);
         }
         else{
-            Glide.with(mcontext).load(imageurl).into(holder.profile_image);
+            Glide.with(mcontext)
+                    .asBitmap()
+                    .load(imageurl).
+                    into(holder.profile_image);
         }
 
 
@@ -114,7 +122,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             super(itemView);
 
             show_message=itemView.findViewById(R.id.show_message);
-            profile_image=itemView.findViewById(R.id.profilemage);
+            profile_image=itemView.findViewById(R.id.profile_image);
             ChatCardParent=itemView.findViewById(R.id.ChartCardParent);
 
 

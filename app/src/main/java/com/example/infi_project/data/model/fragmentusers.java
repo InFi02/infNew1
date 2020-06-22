@@ -46,6 +46,7 @@ public class fragmentusers extends Fragment  {
     private UserAdapter userAdapter;
     private List<Users> musers;
     String mobileText;
+    String mynumber;
 
 
     private ArrayList<String> profileNameList= new ArrayList<>();
@@ -67,6 +68,7 @@ public class fragmentusers extends Fragment  {
 
         AppMainPage activity= (AppMainPage) getActivity();
         mobileText=activity.sendData();
+        mynumber=mobileText.toString();
         readUsers();
     }
 
@@ -121,9 +123,9 @@ public class fragmentusers extends Fragment  {
 
                         Log.i(TAG, "Value = " + next.child("userPhone").getValue());
                         String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
-                        //System.out.println("Value= " + value);
-                        //System.out.println("mobileText= " + mobileText);
-                        if (value != mobileText) {
+                        System.out.println("Value= " + value);
+                        System.out.println("mobileText= " + mynumber);
+                        if (!value.equals(mynumber)) {
                             profileNumberList.add(value);
                             reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
                             reff.addValueEventListener(new ValueEventListener() {
@@ -131,10 +133,11 @@ public class fragmentusers extends Fragment  {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
                                     if (dataSnapshot1.exists()) {
                                         String ProfileName = Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
-                                        //String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
+                                        String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
+                                        //Toast.makeText(getContext(),ImageUrl,Toast.LENGTH_SHORT).show();
 
 
-                                       // profileImageList.add(ImageUrl);
+                                       profileImageList.add(ImageUrl);
                                         profileNameList.add(ProfileName);
 
                                     } else {
