@@ -220,7 +220,38 @@ ProfileTab extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             con[0] = true;
+                            Toast.makeText(getContext(), "You are already connected", Toast.LENGTH_SHORT).show();
+
                         }
+                        else{
+                            checkreq.child(mobileText).child("sent").child(value).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        con[1] = true;
+                                        Toast.makeText(getContext(), "You have already sent a connection request", Toast.LENGTH_SHORT).show();
+
+
+                                    }
+                                    else{
+
+                                        checkreq.child(mobileText).child("sent").child(value).setValue("0");
+                                        checkreq.child(value).child("received").child(mobileText).setValue("0");
+                                        Toast.makeText(getContext(),"Connection Request Sent Succesfully",Toast.LENGTH_SHORT).show();
+
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                        }
+
                     }
 
                     @Override
@@ -228,30 +259,18 @@ ProfileTab extends Fragment {
 
                     }
                 });
-                checkreq.child(mobileText).child("sent").child(value).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            con[1] = true;
-                        }
 
 
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
+                System.out.println(con[0]);
+                System.out.println(con[1]);
 
                 if (con[0]) {
-                    Toast.makeText(getContext(), "You are already connected", Toast.LENGTH_SHORT).show();
+             //       Toast.makeText(getContext(), "You are already connected", Toast.LENGTH_SHORT).show();
                 } else if (con[1]) {
-                    Toast.makeText(getContext(), "You have already sent a connection request", Toast.LENGTH_SHORT).show();
+               //     Toast.makeText(getContext(), "You have already sent a connection request", Toast.LENGTH_SHORT).show();
                 } else {
-                    checkreq.child(mobileText).child("sent").child(value).setValue("0");
-                    checkreq.child(value).child("recieved").child(mobileText).setValue("0");
-                    Toast.makeText(getContext(),"Connection Request Sent Succesfully",Toast.LENGTH_SHORT).show();
+
 
 
                 }
