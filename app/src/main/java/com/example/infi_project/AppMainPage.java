@@ -72,6 +72,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
     DrawerLayout drawerLayout;
     NavigationView navigationView;
 
+    String check;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,11 +125,13 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
 
         reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
+
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.child("choiceSelected").getValue() != null) {
                     String interestSelected = dataSnapshot.child("choiceSelected").getValue().toString();
+                    check=interestSelected;
                     if (interestSelected != "true") {
                         Intent interest_intent = new Intent(AppMainPage.this, Interest_Part.class);
                         interest_intent.putExtra("mobileText", mobileText);
@@ -358,16 +362,17 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+//                if (check.isEmpty() || check.equals("false")) {
+                    String userImage = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
+                    String userName = Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString();
+                    //String userAbout = dataSnapshot.child("about").getV
+                    // alue().toString();
 
-                String userImage = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
-                String userName = Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString();
-                //String userAbout = dataSnapshot.child("about").getV
-                // alue().toString();
+                    na.setText(userName);
+                    Picasso.get().load(userImage).placeholder(R.drawable.profile_image).into(pict);
 
-                na.setText(userName);
-                Picasso.get().load(userImage).placeholder(R.drawable.profile_image).into(pict);
-
-                //userProfileStatus.setText(userStatus);
+                    //userProfileStatus.setText(userStatus);
+//                }
 
 
             }

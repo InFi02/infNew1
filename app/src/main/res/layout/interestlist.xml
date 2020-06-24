@@ -9,8 +9,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/interestRecyclerCard"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_centerInParent="true"
         android:elevation="10dp"
         android:translationZ="15dp"
@@ -22,17 +22,19 @@
 
         <TextView
             android:id="@+id/interest_name"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:background="#FFFFFF"
             android:gravity="center"
             android:text="interest"
             android:textColor="#000"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textSize="15sp"
+            android:textStyle="normal" />
 
 
     </androidx.cardview.widget.CardView>

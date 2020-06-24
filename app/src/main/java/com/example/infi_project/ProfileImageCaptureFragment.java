@@ -127,15 +127,17 @@ public class ProfileImageCaptureFragment extends Fragment {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
-                appMainPage_intent.putExtra("mobileText", mobileText);
-                startActivity(appMainPage_intent);
 
                 Uri test=Uri.parse("https://firebasestorage.googleapis.com/v0/b/infiproject-88ce7.appspot.com/o/ProfileImages%2Fprofile_image.png?alt=media&token=8ef76099-7ffa-4ec6-ab46-3e2e218ce649");
                 String picky=test.toString();
 
 
                 RootRef.child("userDetails").child(mobileText).child("image").setValue(picky);
+                Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
+                appMainPage_intent.putExtra("mobileText", mobileText);
+                appMainPage_intent.putExtra("check", "true");
+                startActivity(appMainPage_intent);
+
 
             }
         });
@@ -154,7 +156,7 @@ public class ProfileImageCaptureFragment extends Fragment {
                 CropImage.activity(ImageUri)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(1, 1)
-                        .start(Objects.requireNonNull(getContext()),this);
+                        .start(requireContext(),this);
 
             }
 

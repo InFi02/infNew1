@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.infi_project.data.ChatTabFragments.Received_REQ;
+import com.example.infi_project.data.ChatTabFragments.Sent_REQ;
 
 public class Connection_Adapter extends FragmentPagerAdapter {
 

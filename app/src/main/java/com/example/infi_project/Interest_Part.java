@@ -26,12 +26,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Interest_Part extends AppCompatActivity {
-    public ImageButton[] igButton=new ImageButton[22];
+    public ImageButton[] igButton;
     //public ImageButton ig3;
-    public boolean[] selectigButton=new boolean[22];
+    public boolean[] selectigButton;
     public int totalSelected;
     private Button subBtn;
     String mobileText;
@@ -39,6 +41,32 @@ public class Interest_Part extends AppCompatActivity {
 
     public Toolbar toolbar;
     public ScrollView interest_scrollpart;
+    public ArrayList<String> interestList= new ArrayList<String>(
+            Arrays.asList(
+                    "null",
+                "Motivation",
+                "Writing",
+                 "Technology",
+                 "Sports and fitness",
+                "Sci-fi and games",
+                "Photography",
+                "Partying",
+                "Outdoor and adventure",
+                "Learning",
+                "Career and growth",
+                "Culture",
+                "Health and wellness",
+                "Food and beverage",
+                "Film",
+                "Fashion",
+                "Music",
+                "Dance",
+                "Literature",
+                "Business",
+                "Reading",
+                "Art and craft",
+                "Pets")
+    );
 
 
 
@@ -52,6 +80,10 @@ public class Interest_Part extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interest__part);
+
+        int length= interestList.size();
+        igButton=new ImageButton[length];
+        selectigButton=new boolean[length];
 
         interest_scrollpart=findViewById(R.id.scrollContent);
 
@@ -130,8 +162,8 @@ public class Interest_Part extends AppCompatActivity {
                             final String b= "ig"+i;
                             Interest interestDetails= new Interest("qw",mobileText);
                             if (selectigButton[i]){
-                                interests.child(b).child(mobileText).setValue(interestDetails);
-                                userInterest.add(b);
+                                interests.child(interestList.get(i)).child(mobileText).setValue(interestDetails);
+                                userInterest.add(interestList.get(i));
                                 totalNoInterestSelected++;
                             }
                         }

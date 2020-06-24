@@ -39,7 +39,7 @@ public class RegActivityTwo extends AppCompatActivity implements DatePickerDialo
     public Vector userInterest=new Vector();
 
     FirebaseDatabase rootNode;
-    DatabaseReference reference; //reference2;
+    DatabaseReference reference, ConnectionReference;
 
 
     @Override
@@ -86,7 +86,7 @@ public class RegActivityTwo extends AppCompatActivity implements DatePickerDialo
             public void onClick(View v) {
                 rootNode=FirebaseDatabase.getInstance();
                 reference=rootNode.getReference("userDetails");
-                //reference2=rootNode.getReference("mobileNumber");
+                ConnectionReference=rootNode.getReference("Connections");
 
 
                 usernameText=username.getText().toString();
@@ -143,6 +143,21 @@ public class RegActivityTwo extends AppCompatActivity implements DatePickerDialo
                         }
                     };
                     mobileNoRef.addListenerForSingleValueEvent(eventListener);
+
+                    DatabaseReference connectionMobile=ConnectionReference.child(mobileNoText);
+                    ValueEventListener secondEventListener= new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            ConnectionReference.child(mobileNoText).child("sent").child("dummy").setValue("0");
+                            ConnectionReference.child(mobileNoText).child("received").child("dummy").setValue("0");
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.d("RegConnectionError", databaseError.getMessage());
+                        }
+                    };
+                    connectionMobile.addListenerForSingleValueEvent(secondEventListener);
 
 //                    Users userDetail = new Users(usernameText, mobileNoText, emailText, dobText, iitbRollNoText, passwordText, false);
 //                    reference.child(mobileNoText).setValue(userDetail).addOnCompleteListener(new OnCompleteListener<Void>() {

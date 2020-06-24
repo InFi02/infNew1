@@ -23,7 +23,7 @@
                 android:id="@+id/imagecard"
                 android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/booksimage"/>
+                android:src="@drawable/motivationalimage"/>
 
             <TextView
                 android:layout_width="wrap_content"
