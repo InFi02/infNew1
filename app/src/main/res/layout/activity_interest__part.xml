@@ -53,7 +53,7 @@
                 android:layout_marginLeft="10dp"
                 android:contentDescription="Art"
                 android:foregroundGravity="center"
-                android:src="@drawable/artandcraftimage"
+                android:src="@drawable/motivationalimage"
                 android:tag="1"
                 android:visibility="visible"
                 android:translationZ="15dp"
@@ -61,7 +61,9 @@
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig2"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig3"
@@ -70,14 +72,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/careerandbusinessimage"
+                android:src="@drawable/technologyimage"
                 android:tag="3"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig4"
-                app:layout_constraintTop_toBottomOf="@id/ig1" />
+                app:layout_constraintTop_toBottomOf="@id/ig1"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig5"
@@ -86,14 +90,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/cultureimage"
+                android:src="@drawable/scifigames"
                 android:tag="5"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig6"
-                app:layout_constraintTop_toBottomOf="@id/ig3" />
+                app:layout_constraintTop_toBottomOf="@id/ig3"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig7"
@@ -102,14 +108,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/danceimage"
+                android:src="@drawable/partyingimage"
                 android:tag="7"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig8"
-                app:layout_constraintTop_toBottomOf="@id/ig5" />
+                app:layout_constraintTop_toBottomOf="@id/ig5"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig9"
@@ -118,14 +126,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/filmimage"
+                android:src="@drawable/learningimage"
                 android:tag="9"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig10"
-                app:layout_constraintTop_toBottomOf="@id/ig7" />
+                app:layout_constraintTop_toBottomOf="@id/ig7"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig11"
@@ -134,14 +144,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/fooddrinksimage"
+                android:src="@drawable/cultureimage"
                 android:tag="11"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig12"
-                app:layout_constraintTop_toBottomOf="@id/ig9" />
+                app:layout_constraintTop_toBottomOf="@id/ig9"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig13"
@@ -150,14 +162,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/healthandwellnessimage"
+                android:src="@drawable/foodbeverageimage"
                 android:tag="13"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig14"
-                app:layout_constraintTop_toBottomOf="@id/ig11" />
+                app:layout_constraintTop_toBottomOf="@id/ig11"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig15"
@@ -166,14 +180,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/languageimage"
+                android:src="@drawable/fashionimage"
                 android:tag="15"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig16"
-                app:layout_constraintTop_toBottomOf="@id/ig13" />
+                app:layout_constraintTop_toBottomOf="@id/ig13"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig17"
@@ -182,14 +198,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/learningimage"
+                android:src="@drawable/danceimage"
                 android:tag="17"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig18"
-                app:layout_constraintTop_toBottomOf="@id/ig15" />
+                app:layout_constraintTop_toBottomOf="@id/ig15"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig19"
@@ -198,14 +216,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/literatureimage"
+                android:src="@drawable/businessimage"
                 android:tag="19"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig20"
-                app:layout_constraintTop_toBottomOf="@id/ig17" />
+                app:layout_constraintTop_toBottomOf="@id/ig17"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig21"
@@ -214,14 +234,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/musicimage"
+                android:src="@drawable/artcraftimage"
                 android:tag="21"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/tickRef"
-                app:layout_constraintTop_toBottomOf="@id/ig19" />
+                app:layout_constraintRight_toLeftOf="@id/ig22"
+                app:layout_constraintTop_toBottomOf="@id/ig19"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
 
             <ImageButton
@@ -231,14 +253,16 @@
                 android:layout_gravity="right"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/booksimage"
+                android:src="@drawable/writingimage"
                 android:tag="2"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig1"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
 
             <ImageButton
@@ -248,14 +272,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/fashionimage"
+                android:src="@drawable/sportsfitnessimage"
                 android:tag="4"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig3"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig2" />
+                app:layout_constraintTop_toBottomOf="@id/ig2"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig6"
@@ -264,14 +290,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/outdooradventuretravelimage"
+                android:src="@drawable/photographyimage"
                 android:tag="6"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig5"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig4" />
+                app:layout_constraintTop_toBottomOf="@id/ig4"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig8"
@@ -280,14 +308,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/petsimage"
+                android:src="@drawable/outdooradventure"
                 android:tag="8"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig7"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig6" />
+                app:layout_constraintTop_toBottomOf="@id/ig6"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig10"
@@ -296,14 +326,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/photographyimage"
+                android:src="@drawable/careergrowthimage"
                 android:tag="10"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig9"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig8" />
+                app:layout_constraintTop_toBottomOf="@id/ig8"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig12"
@@ -312,14 +344,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/scifiandgamesimage"
+                android:src="@drawable/healthfitness"
                 android:tag="12"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig11"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig10" />
+                app:layout_constraintTop_toBottomOf="@id/ig10"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig14"
@@ -328,14 +362,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/socialimage"
+                android:src="@drawable/filmimage"
                 android:tag="14"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig13"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig12" />
+                app:layout_constraintTop_toBottomOf="@id/ig12"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig16"
@@ -344,14 +380,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/sportsandfitnessimage"
+                android:src="@drawable/musicimage"
                 android:tag="16"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig15"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig14" />
+                app:layout_constraintTop_toBottomOf="@id/ig14"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig18"
@@ -360,14 +398,16 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/tech"
+                android:src="@drawable/literatureimage"
                 android:tag="18"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig17"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig16" />
+                app:layout_constraintTop_toBottomOf="@id/ig16"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/ig20"
@@ -376,22 +416,24 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/writingimage"
+                android:src="@drawable/readingimage"
                 android:tag="20"
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
                 app:layout_constraintLeft_toRightOf="@id/ig19"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig18" />
+                app:layout_constraintTop_toBottomOf="@id/ig18"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
-                android:id="@+id/tickRef"
+                android:id="@+id/ig22"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/tick"
+                android:src="@drawable/petsimage"
                 android:tag="22"
                 android:translationZ="15dp"
                 android:elevation="15dp"
@@ -399,7 +441,9 @@
                 android:visibility="invisible"
                 app:layout_constraintLeft_toRightOf="@id/ig21"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ig20" />
+                app:layout_constraintTop_toBottomOf="@id/ig20"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

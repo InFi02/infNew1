@@ -187,6 +187,7 @@ public class MobileOtp extends AppCompatActivity {
                     @Override
                     public void onVerificationFailed(FirebaseException e) {
                         Toast.makeText(MobileOtp.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        next.setEnabled(true);
 
                     }
                 });
