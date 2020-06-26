@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toolbar;
 //extra added
 //import android.net.Uri;
@@ -39,6 +40,7 @@ public class FeedTab extends Fragment {
     private Post_Adapter postAdapter;
     private List<Post> postList;
     Toolbar addPost;
+    ProgressBar progress_circular;
 
 
     public FeedTab() {
@@ -76,6 +78,9 @@ public class FeedTab extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        progress_circular=getView().findViewById(R.id.progress_circular);
+
+
         addPost=getView().findViewById(R.id.toolbarAddPost);
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +112,7 @@ public class FeedTab extends Fragment {
 
 
                 postAdapter.notifyDataSetChanged();
-                //progress_circular.setVisibility(View.GONE);
+                progress_circular.setVisibility(View.GONE);
             }
 
             @Override

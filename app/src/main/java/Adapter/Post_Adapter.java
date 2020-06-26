@@ -1,11 +1,13 @@
 package Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -24,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+import java.util.Objects;
 
 import Models.Post;
 
@@ -81,19 +84,31 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
 
     private void publisherInfo(final ImageView image_profile, final TextView username, final TextView publisher, final String userid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userid);
+                .child("userDetails").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Users user = dataSnapshot.getValue(Users.class);
-                Glide.with(mContext).load(user.getImage()).into(image_profile);
-                username.setText(user.getUserName());
-                publisher.setText(user.getUserName());
+                if (dataSnapshot.exists()) {
+//                    Users user = dataSnapshot.getValue(Users.class);
+//                    Glide.with(mContext).load(user.getImage()).into(image_profile);
+//                    username.setText(user.getUserName());
+//                    publisher.setText(user.getUserName());
+                    Glide.with(mContext).load(Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString()).into(image_profile);
+                    username.setText(Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString());
+//                    publisher.setText(Objects.requireNonNull(dataSnapshot.child("userName").getValue()).toString());
+
+
+                }
+                else {
+                    Log.d("Post_Adapter", "DataSnapshot doesn't exists");
+
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -114,7 +129,7 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
             comment = itemView.findViewById(R.id.comment);
            // save = itemView.findViewById(R.id.save);
             likes = itemView.findViewById(R.id.likes);
-            publisher = itemView.findViewById(R.id.publisher);
+//            publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             comments = itemView.findViewById(R.id.comments);
             //more = itemView.findViewById(R.id.more);
