@@ -40,7 +40,6 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
     }
 
 
-
     @NonNull
     @Override
     public Post_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -56,10 +55,10 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
         final Post post = mPosts.get(position);
 
         Glide.with(mContext).load(post.getPostimage())
-              //  .apply(new RequestOptions().placeholder(R.drawable.placeholder))
+                //  .apply(new RequestOptions().placeholder(R.drawable.placeholder))
                 .into(holder.post_image);
 
-        if (post.getDescription().equals("")){
+        if (post.getDescription().equals("")) {
             holder.description.setVisibility(View.GONE);
         } else {
             holder.description.setVisibility(View.VISIBLE);
@@ -67,10 +66,10 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
         }
 
         publisherInfo(holder.image_profile, holder.username, holder.publisher, post.getPublisher());
-      //  isLiked(post.getPostid(), holder.like);
-       // isSaved(post.getPostid(), holder.save);
-       // nrLikes(holder.likes, post.getPostid());
-       // getCommetns(post.getPostid(), holder.comments);
+        //  isLiked(post.getPostid(), holder.like);
+        // isSaved(post.getPostid(), holder.save);
+        // nrLikes(holder.likes, post.getPostid());
+        // getCommetns(post.getPostid(), holder.comments);
 
     }
 
@@ -79,13 +78,14 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
         return mPosts.size();
     }
 
-    private void publisherInfo(final ImageView image_profile, final TextView username, final TextView publisher, final String userid){
+    private void publisherInfo(final ImageView image_profile, final TextView username, final TextView publisher, final String userid) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(userid);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 Users user = dataSnapshot.getValue(Users.class);
                 Glide.with(mContext).load(user.getImage()).into(image_profile);
                 username.setText(user.getUserName());
@@ -112,7 +112,7 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
             post_image = itemView.findViewById(R.id.post_image);
             like = itemView.findViewById(R.id.like);
             comment = itemView.findViewById(R.id.comment);
-           // save = itemView.findViewById(R.id.save);
+            // save = itemView.findViewById(R.id.save);
             likes = itemView.findViewById(R.id.likes);
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
@@ -121,5 +121,30 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
         }
     }
 
+    private void isLiked(final String postid, final ImageView imageView) {
 
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Likes").child(postid);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(firebaseUser.getUid()).exists()) {
+                    imageView.setImageResource(R.drawable.ic_liked);
+                    imageView.setTag("liked");
+                } else {
+                    imageView.setImageResource(R.drawable.ic_like);
+                    imageView.setTag("like");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
+
+
