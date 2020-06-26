@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +20,24 @@ import android.widget.Button;
 
 import com.example.infi_project.Post_Activity;
 import com.example.infi_project.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Adapter.Post_Adapter;
+import Models.Post;
 
 public class FeedTab extends Fragment {
 
     private Button click_post;
-
+    private RecyclerView recyclerView;
+    private Post_Adapter postAdapter;
+    private List<Post> postList;
 
 
     public FeedTab() {
@@ -30,10 +45,10 @@ public class FeedTab extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
     }
 
@@ -42,7 +57,18 @@ public class FeedTab extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_feed_tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_feed_tab, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(mLayoutManager);
+        postList = new ArrayList<>();
+        postAdapter = new Post_Adapter(getContext(), postList);
+        recyclerView.setAdapter(postAdapter);
+        return view;
     }
 
     @Override
@@ -56,6 +82,35 @@ public class FeedTab extends Fragment {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), Post_Activity.class);
                 getActivity().startActivity(intent);
+            }
+        });
+
+
+    }
+
+
+    private void readPosts()
+    {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Post post = snapshot.getValue(Post.class);
+                    String pd = post.getPublisher();
+                    postList.add(post);
+                }
+
+
+                postAdapter.notifyDataSetChanged();
+                //progress_circular.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
