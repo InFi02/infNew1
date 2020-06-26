@@ -39,6 +39,8 @@ public class Post_Adapter extends RecyclerView.Adapter<Post_Adapter.ViewHolder> 
         this.mPosts = mPosts;
     }
 
+
+
     @NonNull
     @Override
     public Post_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
