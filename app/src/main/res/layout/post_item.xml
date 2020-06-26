@@ -43,18 +43,26 @@
 
         </LinearLayout>
 
-      <!--  <androidx.constraintlayout.widget.ConstraintLayout
+       <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            !-->
+
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:id="@+id/post_image"
-                app:layout_constraintDimensionRatio="1:1"/>
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
-<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:id="@+id/description"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -94,20 +102,15 @@
             android:textStyle="bold"
             android:id="@+id/likes"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:id="@+id/publisher"/>
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:textColor="@color/colorPrimaryDark"-->
+<!--            android:textStyle="bold"-->
+<!--            android:id="@+id/publisher"/>-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:id="@+id/description"/>
+
 
         <TextView
             android:layout_width="wrap_content"
