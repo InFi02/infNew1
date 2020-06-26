@@ -49,14 +49,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="POST"
                     android:textColorHighlight="#000"
                     android:id="@+id/post"
                     android:textSize="20sp"
                     android:layout_centerVertical="true"
                     android:textColor="@color/colorPrimary"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
 
             </RelativeLayout>
@@ -64,8 +63,10 @@
 
 
 
-
-    LinearLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp"
@@ -76,7 +77,7 @@
         android:layout_height="200dp"
         android:scaleType="centerInside"
         android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"
+        android:src="@drawable/ic_add_a_photo_24"
         android:id="@+id/image_added"/>
 
     <EditText
@@ -87,16 +88,36 @@
         android:hint="Description"
         android:maxLines="5"
         android:textColor="#000"
-        android:textColorHint="#000"
-        android:textSize="30dp" />
-
-    <FrameLayout
-        android:id="@+id/fragment_container"
+        android:textSize="30sp" />
+    <TextView
+        android:id="@+id/introInterest"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+        android:layout_height="wrap_content"
+        android:text="Select your interest area related to post"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="20sp"/>
 
-    </FrameLayout>
+    <RadioGroup
+            android:id="@+id/radioGroupInterest1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"/>
+    <Switch
+        android:id="@+id/switchHighlights"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add to highlights"
+        android:textSize="20sp"
+        android:textColor="#000" />
+
+
+    </LinearLayout>
+
+
+
+    </ScrollView>
+
 
 
 </LinearLayout>
