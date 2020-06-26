@@ -47,7 +47,7 @@
         <Toolbar
             android:id="@+id/toolbarAddPost"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="?android:attr/windowBackground">
 
             <LinearLayout
