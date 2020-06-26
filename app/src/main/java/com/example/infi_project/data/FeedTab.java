@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toolbar;
 //extra added
 //import android.net.Uri;
 //import android.support.v4.app.Fragment;
@@ -34,10 +35,10 @@ import Models.Post;
 
 public class FeedTab extends Fragment {
 
-    private Button click_post;
     private RecyclerView recyclerView;
     private Post_Adapter postAdapter;
     private List<Post> postList;
+    Toolbar addPost;
 
 
     public FeedTab() {
@@ -75,8 +76,8 @@ public class FeedTab extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        click_post=getView().findViewById(R.id.click_post);
-        click_post.setOnClickListener(new View.OnClickListener() {
+        addPost=getView().findViewById(R.id.toolbarAddPost);
+        addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -84,6 +85,7 @@ public class FeedTab extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+        readPosts();
 
 
     }
