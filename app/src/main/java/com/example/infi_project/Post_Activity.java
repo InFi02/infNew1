@@ -70,6 +70,7 @@ public class Post_Activity extends AppCompatActivity {
     boolean imageAddedCheck, descriptionAddedCheck;
 
     ArrayList<String> interestNames1=new ArrayList<>();
+    DatabaseReference specificPost;
 
 
 
@@ -95,6 +96,7 @@ public class Post_Activity extends AppCompatActivity {
         phone=mobileText.toString();
 
        DatabaseReference reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(phone);
+       specificPost=FirebaseDatabase.getInstance().getReference().child("specificPost");
 
         reff.addValueEventListener(new ValueEventListener() {
             @Override
@@ -231,7 +233,7 @@ public class Post_Activity extends AppCompatActivity {
                             if (highlightsCheck.isChecked()) {
                                 addHighlights = "true";
                             } else {
-                                addHighlights = "true";
+                                addHighlights = "false";
                             }
                             int radioButtonId = interestRadio.getCheckedRadioButtonId();
                             RadioButton selectedRadio = (RadioButton) findViewById(radioButtonId);
@@ -243,11 +245,18 @@ public class Post_Activity extends AppCompatActivity {
                             hashMap.put("postimage", myUrl);
                             hashMap.put("publisher", phone);
                             hashMap.put("description", description.getText().toString());
-                            hashMap.put("addToHighlights", addHighlights);
                             hashMap.put("interest", interestSelected);
+
+                            HashMap<String,Object> hashMap2 = new HashMap<>();
+                            hashMap2.put("postid", postid);
+                            hashMap2.put("postImage", myUrl);
+                            hashMap2.put("description", description.getText().toString());
+                            hashMap2.put("addToHighlights", addHighlights);
 
 
                             reference.child(postid).setValue(hashMap);
+                            specificPost.child(phone).child(interestSelected).child(postid).setValue(hashMap2);
+
                             progressDialog.dismiss();
 
                             Intent intent = new Intent(Post_Activity.this, AppMainPage.class);

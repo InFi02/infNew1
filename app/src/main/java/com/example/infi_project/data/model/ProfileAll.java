@@ -17,13 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.infi_project.ProfileListRecyclerViewAdapter;
 import com.example.infi_project.R;
 import com.example.infi_project.RecyclerViewAdapter;
+import com.example.infi_project.data.ProfileTab;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import Adapter.Horizontal_Recyler_View;
 import Adapter.Profile_All_Recycle_Adapter;
 import Adapter.Vertical_Recycler_View_Adapter;
 import Models.HorizontalModel;
+import Models.SpecificPost;
 import Models.VerticalModel;
 
 public class ProfileAll extends Fragment {
@@ -41,6 +49,8 @@ public class ProfileAll extends Fragment {
     public ProfileAll() {
 
     }
+    DatabaseReference reference;
+    String mobileText;
 
 
     @Override
@@ -62,6 +72,11 @@ public class ProfileAll extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
       //getImages();
+        ProfileTab frag=(ProfileTab) getParentFragment();
+        assert frag != null;
+        mobileText=frag.sendnumber();
+
+
         initVerticleRecyclerView();
     }
 
@@ -82,28 +97,90 @@ public class ProfileAll extends Fragment {
     }
 
     private void setData() {
+        reference=FirebaseDatabase.getInstance().getReference().child("specificPost").child(mobileText);
 
-        for(int i=1;i<=5;i++){
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    arrayListVertical.clear();
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        VerticalModel verticalModel=new VerticalModel();
+                        String title=snapshot.getKey();
+                        System.out.println(title);
+                        verticalModel.setTitle(title);
+                        assert title != null;
+                        DatabaseReference postInterest= reference.child(title);
 
-            VerticalModel verticalModel=new VerticalModel();
-            verticalModel.setTitle("Title"+i);
+                        ArrayList<HorizontalModel> arrayListHorizontal=new ArrayList<>();
 
-            ArrayList<HorizontalModel> arrayListHorizontal=new ArrayList<>();
-            for(int j=0;j<5;j++){
+                        postInterest.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                if (dataSnapshot1.exists()){
+                                    arrayListHorizontal.clear();
+                                    for (DataSnapshot snapshot1 : dataSnapshot1.getChildren()){
+                                        HorizontalModel horizontalModel=new HorizontalModel();
+                                        System.out.println("test test");
+                                        SpecificPost post = snapshot1.getValue(SpecificPost.class);
+//                                        System.out.println(dataSnapshot1.child("description").getValue().toString());
+                                        assert post != null;
+                                        horizontalModel.setTitle(post.getDescription());
+                                        horizontalModel.setPost(post.getPostImage());
+                                        System.out.println(post.getDescription());
+                                        System.out.println(post.getPostImage());
+//                                        System.out.println(dataSnapshot1.child("postImage").getValue().toString());
 
-                HorizontalModel horizontalModel=new HorizontalModel();
-                horizontalModel.setTitle("Description"+j);
+                                        arrayListHorizontal.add(horizontalModel);
+                                    }
+                                }
+                            }
 
-                arrayListHorizontal.add(horizontalModel);
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                            }
+                        });
+
+                        verticalModel.setArrayList(arrayListHorizontal);
+                        arrayListVertical.add(verticalModel);
+
+
+                    }
+                    adapter.notifyDataSetChanged();
+
+                }
 
             }
 
-            verticalModel.setArrayList(arrayListHorizontal);
-            arrayListVertical.add(verticalModel);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        }
-        adapter.notifyDataSetChanged();
+            }
+        });
+
+
+//        for(int i=1;i<=5;i++){
+//
+//            VerticalModel verticalModel=new VerticalModel();
+//            verticalModel.setTitle("Title"+i);
+//
+//            ArrayList<HorizontalModel> arrayListHorizontal=new ArrayList<>();
+//            for(int j=0;j<5;j++){
+//
+//                HorizontalModel horizontalModel=new HorizontalModel();
+//                horizontalModel.setTitle("Description"+j);
+//
+//                arrayListHorizontal.add(horizontalModel);
+//
+//
+//            }
+//
+//            verticalModel.setArrayList(arrayListHorizontal);
+//            arrayListVertical.add(verticalModel);
+//
+//        }
+//        adapter.notifyDataSetChanged();
     }
 
  /* private void getImages() {
