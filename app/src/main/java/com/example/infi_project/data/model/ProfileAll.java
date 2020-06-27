@@ -33,10 +33,12 @@ public class ProfileAll extends Fragment {
     RecyclerView verticalRecyclerView;
     Vertical_Recycler_View_Adapter adapter;
 
-  private  ArrayList<VerticalModel> arrayListVertical;
+//  private  ArrayList<VerticalModel> arrayListVertical;
 
-    private ArrayList<String> mTitles = new ArrayList<>();
-    private ArrayList<String> mImageUrls = new ArrayList<>();
+//    private ArrayList<String> mTitles = new ArrayList<>();
+//    private ArrayList<String> mImageUrls = new ArrayList<>();
+    public ArrayList<String> postInterestList;
+    public ArrayList<ArrayList<String>> postIdList;
 
 
     public ProfileAll() {
@@ -75,13 +77,16 @@ public class ProfileAll extends Fragment {
 
     private void initVerticleRecyclerView() {
 
-        arrayListVertical=new ArrayList<>();
+//        arrayListVertical=new ArrayList<>();
+        postInterestList=new ArrayList<>();
+        postIdList= new ArrayList<ArrayList<String>>();
+
 
         verticalRecyclerView=(RecyclerView)getView().findViewById(R.id.recyclerview);
         verticalRecyclerView.setHasFixedSize(true);
         verticalRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
-        adapter=new Vertical_Recycler_View_Adapter(getContext(),arrayListVertical);
+        adapter=new Vertical_Recycler_View_Adapter(getContext(),postInterestList,postIdList,mobileText);
         verticalRecyclerView.setAdapter(adapter);
 
         setData();
@@ -96,48 +101,15 @@ public class ProfileAll extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()){
-                    arrayListVertical.clear();
+//                    arrayListVertical.clear();
                     for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                        VerticalModel verticalModel=new VerticalModel();
-                        String title=snapshot.getKey();
-                        System.out.println(title);
-                        verticalModel.setTitle(title);
-                        assert title != null;
-                        DatabaseReference postInterest= reference.child(title).getRef();
+                        postInterestList.add(snapshot.getKey());
+                        ArrayList<String> temp= new ArrayList<>();
+                        for (DataSnapshot insideSnapshot: snapshot.getChildren()){
+                            temp.add(insideSnapshot.getKey());
+                        }
 
-                        ArrayList<HorizontalModel> arrayListHorizontal=new ArrayList<>();
-
-                        postInterest.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                if (dataSnapshot1.exists()){
-                                    arrayListHorizontal.clear();
-                                    for (DataSnapshot snapshot1 : dataSnapshot1.getChildren()){
-                                        HorizontalModel horizontalModel=new HorizontalModel();
-                                        System.out.println("test test");
-                                        SpecificPost post = snapshot1.getValue(SpecificPost.class);
-//                                        System.out.println(dataSnapshot1.child("description").getValue().toString());
-                                        assert post != null;
-                                        horizontalModel.setTitle(post.getDescription());
-                                        horizontalModel.setPost(post.getPostImage());
-                                        System.out.println(post.getDescription());
-                                        System.out.println(post.getPostImage());
-//                                        System.out.println(dataSnapshot1.child("postImage").getValue().toString());
-
-                                        arrayListHorizontal.add(horizontalModel);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-                        verticalModel.setArrayList(arrayListHorizontal);
-                        arrayListVertical.add(verticalModel);
-
+                        postIdList.add(temp);
 
                     }
                     adapter.notifyDataSetChanged();
