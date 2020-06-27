@@ -42,6 +42,8 @@ public class FeedTab extends Fragment {
     Toolbar addPost;
     ProgressBar progress_circular;
 
+    public boolean checkView=false;
+
 
     public FeedTab() {
         // Required empty public constructor
@@ -53,11 +55,14 @@ public class FeedTab extends Fragment {
         super.onCreate(savedInstanceState);
 
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        checkView=true;
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_feed_tab, container, false);
@@ -110,8 +115,9 @@ public class FeedTab extends Fragment {
                     postList.add(post);
                 }
 
-
-                postAdapter.notifyDataSetChanged();
+                if (checkView) {
+                    postAdapter.notifyDataSetChanged();
+                }
                 progress_circular.setVisibility(View.GONE);
             }
 
@@ -120,5 +126,12 @@ public class FeedTab extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        checkView=false;
     }
 }

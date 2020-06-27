@@ -48,8 +48,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Study\infNew1\app\src\main\res\drawable\infii.png" />
-                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="imagePath" value="D:\Study\infNew1\app\src\main\res\drawable\iconfinal.png" />
+                                                <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -82,9 +82,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="D:\Study\infNew1\app\src\main\res\drawable\infii.png" />
+                                      <entry key="imageAsset" value="D:\Study\infNew1\app\src\main\res\drawable\iconfinal.png" />
                                       <entry key="outputName" value="infi_logo" />
-                                      <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>

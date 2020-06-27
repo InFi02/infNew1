@@ -74,12 +74,16 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
     String check;
 
+    boolean checkView=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_main_page);
 
         viewModel=new ViewModelProvider(AppMainPage.this).get(SharedViewModel.class);
+
+
 
         toolbar = findViewById(R.id.myToolBar);
         tabLayout = findViewById(R.id.tabLayout);
@@ -90,8 +94,9 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
         tabLayout.setupWithViewPager(viewPager);
 
 
-        Intent appMainPage_intent = getIntent();
-        mobileText = appMainPage_intent.getStringExtra("mobileText");
+//        Intent appMainPage_intent = getIntent();
+        mobileText = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+        checkView=true;
 
 
 
@@ -355,12 +360,13 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
         final TextView na = (TextView)header.findViewById(R.id.p_name);
         TextView abo =(TextView)header.findViewById(R.id.p_about);
 
+        if(checkView) {
+            String phone2= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
 
-
-        reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
-        reff.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(phone2);
+            reff.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 //                if (check.isEmpty() || check.equals("false")) {
                     String userImage = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
@@ -375,15 +381,20 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 //                }
 
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
+                }
 
-        });
+            });
+        }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        checkView=false;
+    }
 }

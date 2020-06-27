@@ -22,6 +22,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.13" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="(Make Sure that Phone Number is present in this mobile)"
+        android:textColor="#FFFFFE"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24" />
+
 
     <com.rilixtech.widget.countrycodepicker.CountryCodePicker
         android:id="@+id/ccp"
@@ -42,7 +57,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
-        android:hint="Mobile Number"
+        android:hint="Phone Number"
         android:inputType="phone"
         android:textColor="#F2F1F3"
         android:textColorHint="#FFFEFE"
