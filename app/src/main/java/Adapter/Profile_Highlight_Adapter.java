@@ -50,6 +50,13 @@ public class Profile_Highlight_Adapter extends  RecyclerView.Adapter<Profile_Hig
                 .load(post.getPostimage())
                 .into(holder.post_image);
 
+        holder.post_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
 
 
    }

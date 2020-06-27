@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.infi_project.R;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class Horizontal_Recyler_View   extends RecyclerView.Adapter<Horizontal_R
     public void onBindViewHolder(@NonNull HorizontalRVViewHolder holder, int position) {
         final HorizontalModel horizontalModel=arrayList.get(position);
         holder.textViewTitle.setText(horizontalModel.getTitle());
+        Glide.with(mContext).load(horizontalModel.getPost()).into(holder.imageViewThumb);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
