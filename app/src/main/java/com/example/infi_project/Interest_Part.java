@@ -48,7 +48,7 @@ public class Interest_Part extends AppCompatActivity {
                 "Writing",
                  "Technology",
                  "Sports and fitness",
-                "Sci-fi and games",
+                "Science Fiction",
                 "Photography",
                 "Partying",
                 "Outdoor and adventure",
@@ -65,7 +65,8 @@ public class Interest_Part extends AppCompatActivity {
                 "Business",
                 "Reading",
                 "Art and craft",
-                "Pets")
+                "Pets",
+                "Gaming")
     );
 
 
