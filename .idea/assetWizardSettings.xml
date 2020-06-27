@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Study\android_app_dev\infNew1\app\src\main\res\drawable-hdpi\ic_add_white_image.png" />
+                                                <entry key="imagePath" value="D:\Study\infNew1\app\src\main\res\drawable\infii.png" />
                                                 <entry key="opacityPercent" value="80" />
                                               </map>
                                             </option>
@@ -81,10 +81,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="D:\Study\android_app_dev\infNew1\app\src\main\res\drawable-hdpi\ic_add_white_image.png" />
-                                      <entry key="outputName" value="ic_sidemenu" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="D:\Study\infNew1\app\src\main\res\drawable\infii.png" />
+                                      <entry key="outputName" value="infi_logo" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="ffffff" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>

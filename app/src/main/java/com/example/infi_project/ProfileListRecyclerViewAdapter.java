@@ -66,7 +66,7 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: "+profileNameList.get(position));
-                Toast.makeText(mContext, profileNameList.get(position)+ " is Clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, profileNameList.get(position)+ " is Clicked", Toast.LENGTH_SHORT).show();
                 //to be removed:- start 001
                // Intent messageActivityIntent= new Intent(mContext, MessageActivity.class);
                 //messageActivityIntent.putExtra("UserName", profileNameList.get(position));
@@ -77,17 +77,19 @@ public class ProfileListRecyclerViewAdapter  extends RecyclerView.Adapter<Profil
 
 
 
-                ProfileTab ldf = new ProfileTab ();
-                Bundle args = new Bundle();
-                args.putString("profileno", profileNumberList.get(position));
-                ldf.setArguments(args);
-                AppMainPage activity=(AppMainPage)v.getContext();
+//                ProfileTab ldf = new ProfileTab ();
+//                Bundle args = new Bundle();
+//                args.putString("profileno", profileNumberList.get(position));
+//                ldf.setArguments(args);
+//                AppMainPage activity=(AppMainPage)v.getContext();
+//
+//                //Inflate the fragment
+//               // FragmentTransaction transaction = fragmentManager.beginTransaction();
+//               activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ldf).addToBackStack(null).commit();
 
-                //Inflate the fragment
-               // FragmentTransaction transaction = fragmentManager.beginTransaction();
-               activity.getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, ldf).addToBackStack(null).commit();
-
-
+                Intent viewProfileIntent= new Intent (mContext, ViewProfileActivity.class);
+                viewProfileIntent.putExtra("phone",profileNumberList.get(position));
+                mContext.startActivity(viewProfileIntent);
 
 
             }

@@ -27,6 +27,7 @@ import com.example.infi_project.ProfileForUsers;
 import com.example.infi_project.R;
 import com.example.infi_project.data.model.ProfileImagePicker;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,8 +71,8 @@ ProfileTab extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppMainPage activity = (AppMainPage) getActivity();
-        mobileText = activity.sendData();
+//        AppMainPage activity = (AppMainPage) getActivity();
+        mobileText = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
 
 
     }
@@ -212,7 +213,7 @@ ProfileTab extends Fragment {
             @Override
             public void onClick(View v) {
                 DatabaseReference checkreq;
-                final boolean[] con = {false, false};
+                boolean[] con = {false, false};
 
                 checkreq = FirebaseDatabase.getInstance().getReference().child("Connections");
                 checkreq.child(mobileText).child("connected").child(value).addValueEventListener(new ValueEventListener() {
