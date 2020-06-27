@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 
 import Adapter.Profile_Highlight_Adapter;
@@ -96,7 +97,7 @@ public class HighlightsProfile extends Fragment {
 
     private void MyPhotos(){
 
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Posts");
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -106,7 +107,9 @@ public class HighlightsProfile extends Fragment {
                    // Toast.makeText(getContext(),post.getPublisher(),Toast.LENGTH_SHORT).show();
                    System.out.println(post.getPublisher());
                     if(post.getPublisher().equals(profileid)){
-                        postList.add(post);
+                        if (Objects.requireNonNull(snapshot.child("addToHighlights").getValue()).toString().equals("true")){
+                            postList.add(post);
+                        }
 
                     }
                 }

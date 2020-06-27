@@ -245,6 +245,8 @@ public class Post_Activity extends AppCompatActivity {
                             hashMap.put("publisher", phone);
                             hashMap.put("description", description.getText().toString());
                             hashMap.put("interest", interestSelected);
+                            hashMap.put("addToHighlights", addHighlights);
+
 
                             HashMap<String,Object> hashMap2 = new HashMap<>();
                             hashMap2.put("postid", postid);
