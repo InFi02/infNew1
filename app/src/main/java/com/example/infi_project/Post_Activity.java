@@ -104,7 +104,6 @@ public class Post_Activity extends AppCompatActivity {
                 if (dataSnapshot.child("choiceSelected").getValue() != null) {
                     String interestSelected = dataSnapshot.child("choiceSelected").getValue().toString();
                     if (interestSelected.equals("true")) {
-
                         String interestNoText=dataSnapshot.child("totalNoOfInterest").getValue().toString();
                         interestNo=Integer.parseInt(interestNoText);
                         for (int i=0; i<interestNo; i++){
@@ -318,5 +317,11 @@ public class Post_Activity extends AppCompatActivity {
 
         }
 
-
+    public ArrayList<String> sendInterest(){
+        return interestNames1;
     }
+    public String sendPhone() {return phone;}
+
+
+
+}

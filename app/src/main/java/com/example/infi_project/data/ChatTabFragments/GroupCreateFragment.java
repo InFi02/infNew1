@@ -25,6 +25,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.infi_project.AppMainPage;
+import com.example.infi_project.Post_Activity;
 import com.example.infi_project.R;
 import com.example.infi_project.data.SharedViewModel;
 
@@ -78,7 +79,7 @@ public class GroupCreateFragment extends DialogFragment {
 //            }
 //
 //        });
-        AppMainPage activity= (AppMainPage) getActivity(); // should be replaced with better methods
+        Post_Activity activity= (Post_Activity) getActivity(); // should be replaced with better methods
         interestNames1.clear();
         assert activity != null;
         interestNames1.addAll(activity.sendInterest());

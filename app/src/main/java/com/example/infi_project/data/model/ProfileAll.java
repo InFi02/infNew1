@@ -2,21 +2,17 @@ package com.example.infi_project.data.model;
 
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.infi_project.ProfileListRecyclerViewAdapter;
 import com.example.infi_project.R;
-import com.example.infi_project.RecyclerViewAdapter;
 import com.example.infi_project.data.ProfileTab;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,10 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-import Adapter.Horizontal_Recyler_View;
-import Adapter.Profile_All_Recycle_Adapter;
 import Adapter.Vertical_Recycler_View_Adapter;
 import Models.HorizontalModel;
 import Models.SpecificPost;
@@ -110,7 +103,7 @@ public class ProfileAll extends Fragment {
                         System.out.println(title);
                         verticalModel.setTitle(title);
                         assert title != null;
-                        DatabaseReference postInterest= reference.child(title);
+                        DatabaseReference postInterest= reference.child(title).getRef();
 
                         ArrayList<HorizontalModel> arrayListHorizontal=new ArrayList<>();
 

@@ -90,7 +90,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:foregroundGravity="center"
-                android:src="@drawable/scifigames"
+                android:src="@drawable/sciencefictionimage"
                 android:tag="5"
                 android:translationZ="15dp"
                 android:elevation="15dp"
@@ -242,6 +242,24 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/ig22"
                 app:layout_constraintTop_toBottomOf="@id/ig19"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+
+            <ImageButton
+                android:id="@+id/ig23"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:foregroundGravity="center"
+                android:src="@drawable/gamingimage"
+                android:tag="23"
+                android:translationZ="15dp"
+                android:elevation="15dp"
+                android:stateListAnimator="@null"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/ig24"
+                app:layout_constraintTop_toBottomOf="@id/ig21"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"/>
 
@@ -438,10 +456,27 @@
                 android:translationZ="15dp"
                 android:elevation="15dp"
                 android:stateListAnimator="@null"
-                android:visibility="invisible"
                 app:layout_constraintLeft_toRightOf="@id/ig21"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ig20"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"/>
+
+            <ImageButton
+                android:id="@+id/ig24"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="10dp"
+                android:foregroundGravity="center"
+                android:src="@drawable/tick"
+                android:tag="24"
+                android:translationZ="15dp"
+                android:elevation="15dp"
+                android:stateListAnimator="@null"
+                android:visibility="invisible"
+                app:layout_constraintLeft_toRightOf="@id/ig23"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ig22"
                 android:scaleType="centerCrop"
                 android:adjustViewBounds="true"/>
 
@@ -457,6 +492,7 @@
         android:layout_marginBottom="5dp"
         android:gravity="center_horizontal"
         android:text="submit"
+        android:background="@drawable/roundbuttontwo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
