@@ -133,10 +133,15 @@ public class ProfileImageCaptureFragment extends Fragment {
 
 
                 RootRef.child("userDetails").child(mobileText).child("image").setValue(picky);
-                Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
-                appMainPage_intent.putExtra("mobileText", mobileText);
-                appMainPage_intent.putExtra("check", "true");
-                startActivity(appMainPage_intent);
+                Intent mainIntent = new Intent(getContext(), MainActivity.class);
+//                appMainPage_intent.putExtra("mobileText", mobileText);
+                mainIntent.putExtra("check", "true");
+
+                Toast.makeText(getContext(), "Registration Successful!! You can LogIn Now", Toast.LENGTH_LONG).show();
+                startActivity(mainIntent);
+                if(getActivity() != null) {
+                    getActivity().finish();
+                }
 
 
             }
@@ -148,6 +153,7 @@ public class ProfileImageCaptureFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
+        System.out.println("Inside on Activity Result");
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("Image_Crop", String.valueOf(requestCode));
         try {
@@ -174,6 +180,7 @@ public class ProfileImageCaptureFragment extends Fragment {
 
 
                     StorageReference filePath = userProfileImagesReference.child(mobileText + ".jpg");
+                    System.out.println("Test Message");
 
                     filePath.putFile(resultUri)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -183,18 +190,20 @@ public class ProfileImageCaptureFragment extends Fragment {
                                     firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
+                                            System.out.println("Test Message two");
                                             final String downloadUrl = uri.toString();
+                                            System.out.println(downloadUrl);
 
-                                            RootRef.child("userDetails").child(mobileText).child("")
+                                            RootRef.child("userDetails").child(mobileText).child("image")
                                                     .setValue(downloadUrl)
                                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
-                                                                Toast.makeText(getContext(), "Image saved in database successfully", Toast.LENGTH_SHORT).show();
-                                                                Intent appMainPage_intent = new Intent(getContext(), AppMainPage.class);
-                                                                appMainPage_intent.putExtra("mobileText", mobileText);
-                                                                startActivity(appMainPage_intent);
+                                                                Toast.makeText(getContext(), "Registration Successful!! You can LogIn ", Toast.LENGTH_LONG).show();
+                                                                Intent mainIntent = new Intent(getContext(), MainActivity.class);
+//                                                                appMainPage_intent.putExtra("mobileText", mobileText);
+                                                                startActivity(mainIntent);
                                                                 if(getActivity() != null) {
                                                                     getActivity().finish();
                                                                 }

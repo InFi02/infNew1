@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back0"
+    android:background="@drawable/backgradient0"
     tools:context=".MainActivity">
 
 
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/wlcomeNote"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/iconfinal" />
 
     <com.rilixtech.widget.countrycodepicker.CountryCodePicker
         android:id="@+id/ccp1"
@@ -77,9 +77,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="#009688"
+        android:background="#FFF"
         android:text="verify and login"
-        android:textColor="#FFFFFF"
+        android:textColor="#000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

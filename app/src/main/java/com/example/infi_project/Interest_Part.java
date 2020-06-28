@@ -37,6 +37,7 @@ public class Interest_Part extends AppCompatActivity {
     public int totalSelected;
     private Button subBtn;
     String mobileText;
+    int length;
     public Vector userInterest=new Vector();
 
     public Toolbar toolbar;
@@ -82,7 +83,7 @@ public class Interest_Part extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interest__part);
 
-        int length= interestList.size();
+        length= interestList.size();
         igButton=new ImageButton[length];
         selectigButton=new boolean[length];
 
@@ -90,7 +91,7 @@ public class Interest_Part extends AppCompatActivity {
 
         toolbar=findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Infi");
+        getSupportActionBar().setTitle("InFi");
 
 
 
@@ -98,7 +99,8 @@ public class Interest_Part extends AppCompatActivity {
         igButton[0]=null;
         selectigButton[0]=false;
         totalSelected=0;
-        for (int i=1; i<22; i++){
+        System.out.println(length);
+        for (int i=1; i<length; i++){
             String b="ig"+i;
             int imageId=getResources().getIdentifier(b,"id",getPackageName());
             igButton[i]=findViewById(imageId);
@@ -120,7 +122,7 @@ public class Interest_Part extends AppCompatActivity {
     }
 
     public void igOnclick(){
-        for (int k=1; k<22; k++){
+        for (int k=1; k<length; k++){
             final int j=k;
             igButton[j].setOnClickListener(
                     new View.OnClickListener() {
@@ -159,7 +161,7 @@ public class Interest_Part extends AppCompatActivity {
                     public void onClick(View v) {
                         final int[] interestUploaded = {0};
                         int totalNoInterestSelected=0;
-                        for (int i=1; i<22; i++){
+                        for (int i=1; i<length; i++){
                             final String b= "ig"+i;
                             Interest interestDetails= new Interest("qw",mobileText);
                             if (selectigButton[i]){
