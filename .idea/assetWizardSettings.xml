@@ -48,7 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="D:\Study\infNew1\app\src\main\res\drawable\iconfinal.png" />
+                                                <entry key="imagePath" value="D:\Study\infNew1\app\src\main\res\drawable\gradient.xml" />
                                                 <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
@@ -82,8 +82,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="D:\Study\infNew1\app\src\main\res\drawable\iconfinal.png" />
-                                      <entry key="outputName" value="infi_logo" />
+                                      <entry key="imageAsset" value="D:\Study\infNew1\app\src\main\res\drawable\gradient.xml" />
+                                      <entry key="outputName" value="backgradient0" />
                                       <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>

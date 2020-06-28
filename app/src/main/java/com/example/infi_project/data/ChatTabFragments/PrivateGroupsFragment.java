@@ -87,6 +87,7 @@ public class PrivateGroupsFragment extends Fragment {
                     if (interestSelected.equals("true")) {
                         String interestNoText=dataSnapshot.child("totalNoOfInterest").getValue().toString();
                         int interestNo=Integer.parseInt(interestNoText);
+                        interestNames1.clear();
                         for (int i=0; i<interestNo; i++){
                             String interestNumber= String.valueOf(i);
                             String interest= dataSnapshot.child("userInterest").child(interestNumber).getValue().toString();
@@ -163,7 +164,7 @@ public class PrivateGroupsFragment extends Fragment {
 
                 RadioGroup interestRadioGroup= new RadioGroup(getContext());
                 interestRadioGroup.setOrientation(LinearLayout.VERTICAL);
-                Toast.makeText(getContext(), "length "+interestNames1.size(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "length "+interestNames1.size(), Toast.LENGTH_SHORT).show();
                 for (int i=0; i<interestNames1.size();i++){
                     RadioButton newButton= new RadioButton(getContext());
                     newButton.setId(View.generateViewId());
