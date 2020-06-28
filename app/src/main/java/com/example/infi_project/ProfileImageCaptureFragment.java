@@ -1,5 +1,6 @@
 package com.example.infi_project;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -173,6 +174,9 @@ public class ProfileImageCaptureFragment extends Fragment {
 
                 Log.d("Image cropped", result.toString());
                 if (resultCode == RESULT_OK) {
+                    final ProgressDialog progressDialog=new ProgressDialog(getContext());
+                    progressDialog.setMessage("Uploading");
+                    progressDialog.show();
 
                     assert result != null;
                     Uri resultUri = result.getUri();
@@ -200,7 +204,9 @@ public class ProfileImageCaptureFragment extends Fragment {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
+                                                                progressDialog.dismiss();
                                                                 Toast.makeText(getContext(), "Registration Successful!! You can LogIn ", Toast.LENGTH_LONG).show();
+
                                                                 Intent mainIntent = new Intent(getContext(), MainActivity.class);
 //                                                                appMainPage_intent.putExtra("mobileText", mobileText);
                                                                 startActivity(mainIntent);
@@ -209,6 +215,7 @@ public class ProfileImageCaptureFragment extends Fragment {
                                                                 }
 
                                                             } else {
+                                                                progressDialog.dismiss();
                                                                 String message = task.getException().toString();
                                                                 Toast.makeText(getContext(), "Error: " + message, Toast.LENGTH_SHORT).show();
 

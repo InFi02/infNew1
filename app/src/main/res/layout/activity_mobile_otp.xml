@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="(Make Sure that Phone Number is present in this mobile)"
+        android:text="(Make Sure that Sim is present in this mobile)"
         android:textColor="#FFFFFE"
         android:textSize="15sp"
         android:textStyle="normal"

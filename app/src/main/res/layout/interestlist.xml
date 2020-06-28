@@ -3,6 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:outlineAmbientShadowColor="#FFFFFF"
+    android:outlineSpotShadowColor="#FFFFFF"
     android:layout_margin="1dp"
     android:id="@+id/layout_interestList">
 
@@ -14,8 +16,10 @@
         android:layout_centerInParent="true"
         android:elevation="10dp"
         android:translationZ="15dp"
-        app:cardBackgroundColor="#2FDAD0D0"
-        app:cardCornerRadius="4dp"
+        app:cardBackgroundColor="#FFF6F6D9"
+        android:outlineSpotShadowColor="#FFF"
+        android:outlineAmbientShadowColor="#FFF"
+        app:cardCornerRadius="20dp"
         app:cardElevation="2dp"
         app:cardMaxElevation="5dp">
 
@@ -29,7 +33,9 @@
             android:layout_marginBottom="3dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:background="#FFFFFF"
+            android:paddingRight="2dp"
+            android:paddingLeft="2dp"
+            android:background="#FFF6F6D9"
             android:gravity="center"
             android:text="interest"
             android:textColor="#000"
