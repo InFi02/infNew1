@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MobileOtp"
-    android:background="@drawable/back0">
+    android:background="@drawable/gradient">
 
     <TextView
         android:id="@+id/textView2"
@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Welcome Aboard \n Lets Verify Your Number"
-        android:textColor="#FFFFFE"
+        android:textColor="#000"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:fontFamily="@font/amarante"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,9 +78,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:background="#009688"
+        android:background="#FFF"
         android:text="get otp"
-        android:textColor="#FFFFFF"
+        android:textColor="#000"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

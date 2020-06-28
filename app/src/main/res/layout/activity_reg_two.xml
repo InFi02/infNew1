@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back0"
+    android:background="@drawable/gradient"
     tools:context=".RegActivityTwo">
 
     <TextView
@@ -12,9 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Help us to know you better"
-        android:textColor="#FFFFFE"
+        android:textColor="#000"
         android:textSize="30sp"
         android:textStyle="bold"
+        android:fontFamily="@font/amarante"
         android:foregroundGravity="center"
         android:layout_marginTop="40dp"
         app:layout_constraintBottom_toTopOf="@+id/name"
@@ -73,15 +74,28 @@
         app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email" />
 
+<!--    <Button-->
+<!--        android:id="@+id/signupBtn"-->
+<!--        android:layout_width="113dp"-->
+<!--        android:layout_height="46dp"-->
+<!--        android:layout_marginTop="75dp"-->
+<!--        android:text="Sign Up"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/dob" />-->
     <Button
         android:id="@+id/signupBtn"
-        android:layout_width="113dp"
-        android:layout_height="46dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
-        android:text="Sign Up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dob" />
+        app:layout_constraintTop_toBottomOf="@+id/dob"
+        android:background="@drawable/roundbuttontwo"
+        android:text="Submit"
+        android:gravity="center"
+        android:fontFamily="@font/alegreya_sans_black_italic"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/logInPage"
@@ -128,26 +142,27 @@
 
     <CheckBox
         android:id="@+id/checkBoxTnC"
-        android:layout_width="81dp"
-        android:layout_height="37dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="91dp"
         android:layout_marginTop="24dp"
-        android:text="Accept"
+        android:text="Accept Terms and Condition"
+        android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/tnc"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dob" />
 
-    <TextView
-        android:id="@+id/tnc"
-        android:layout_width="195dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="27dp"
-        android:text="Terms and Condition"
-        android:textColor="#360DB5"
-        android:textSize="19dp"
-        app:layout_constraintStart_toEndOf="@+id/checkBoxTnC"
-        app:layout_constraintTop_toBottomOf="@+id/dob" />
+<!--    <TextView-->
+<!--        android:id="@+id/tnc"-->
+<!--        android:layout_width="195dp"-->
+<!--        android:layout_height="37dp"-->
+<!--        android:layout_marginTop="27dp"-->
+<!--        android:text="Terms and Condition"-->
+<!--        android:textColor="#000"-->
+<!--        android:textSize="15sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/checkBoxTnC"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/dob" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

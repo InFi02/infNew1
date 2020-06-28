@@ -1,5 +1,6 @@
 package com.example.infi_project.data.model;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import com.example.infi_project.data.ProfileTab;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -73,9 +75,9 @@ public class ProfileImagePicker extends DialogFragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        AppMainPage activity= (AppMainPage) getActivity();
-        mobileText=activity.sendData();
-
+//        AppMainPage activity= (AppMainPage) getActivity();
+//        mobileText=activity.sendData();
+            mobileText= FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         ProfileTab frag=(ProfileTab) getParentFragment();
         profile_pic=frag.sData();
 
@@ -162,7 +164,7 @@ public class ProfileImagePicker extends DialogFragment  {
             CropImage.activity(ImageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(1,1)
-                    .start(Objects.requireNonNull(getContext()),this);
+                    .start(requireContext(),this);
 
         }
 
@@ -173,7 +175,9 @@ public class ProfileImagePicker extends DialogFragment  {
 
             if(resultCode==RESULT_OK)
             {
-
+                final ProgressDialog progressDialog=new ProgressDialog(getContext());
+                progressDialog.setMessage("Uploading");
+                progressDialog.show();
                 assert result != null;
 
                 Uri resultUri = result.getUri();
@@ -189,23 +193,32 @@ public class ProfileImagePicker extends DialogFragment  {
                                 firebaseUri.addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
+                                        System.out.println("Test Message two");
                                         final String downloadUrl = uri.toString();
+                                        System.out.println(downloadUrl);
+                                        System.out.println(mobileText+"ProfileImagePicker");
 
                                         RootRef.child("userDetails").child(mobileText).child("image")
                                                 .setValue(downloadUrl)
                                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                        System.out.println("Checking ");
                                                         if(task.isSuccessful()){
+                                                            System.out.println("Test Test Test");
                                                             Toast.makeText(getContext(), "Profile Picture updated successfully", Toast.LENGTH_SHORT).show();
                                                             Picasso.get().load(downloadUrl).placeholder(R.drawable.profile_image).into(profile);
                                                             Picasso.get().load(downloadUrl).placeholder(R.drawable.profile_image).into(profile_pic);
+                                                            progressDialog.dismiss();
 
-                                                           getDialog().dismiss();
+
+                                                            getDialog().dismiss();
 
 
                                                         }
                                                         else{
+                                                            progressDialog.dismiss();
+                                                            Toast.makeText(getContext(), "Eeee", Toast.LENGTH_LONG).show();
                                                             String message = task.getException().toString();
                                                             Toast.makeText(getContext(), "Error: " + message,Toast.LENGTH_SHORT).show();
 

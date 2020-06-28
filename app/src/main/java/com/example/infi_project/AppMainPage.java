@@ -95,7 +95,8 @@ public class AppMainPage extends AppCompatActivity implements NavigationView.OnN
 
 
 //        Intent appMainPage_intent = getIntent();
-        mobileText = FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
+//        mobileText= appMainPage_intent.getStringExtra("mobileText");
+        mobileText=FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber();
         checkView=true;
 
 

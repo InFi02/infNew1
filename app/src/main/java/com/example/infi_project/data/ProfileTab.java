@@ -140,7 +140,7 @@ ProfileTab extends Fragment {
                 ProfileImagePicker myDialogFragment = new ProfileImagePicker();
                 myDialogFragment.show(getChildFragmentManager(), "MyFragment");
 
-                RetrieveUserInfo(mobileText);
+                RetrieveUserInfo(value);
                 System.out.println("Hello World");
             }
 
@@ -308,17 +308,19 @@ ProfileTab extends Fragment {
                 transaction.commit();*/
 
 
-    private void RetrieveUserInfo(String mobileText) {
-        Toast.makeText(getContext(), mobileText, Toast.LENGTH_SHORT).show();
-        System.out.println(mobileText);
+    private void RetrieveUserInfo(String mobile) {
+//        Toast.makeText(getContext(), mobileText, Toast.LENGTH_SHORT).show();
+        System.out.println(mobile+"retrieveuserinfo");
 
-        reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobileText);
+        reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(mobile);
         reff.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
 
                 userImage = dataSnapshot.child("image").getValue().toString();
+                System.out.println(userImage);
+
                 String userName = dataSnapshot.child("userName").getValue().toString();
                 //String userAbout = dataSnapshot.child("about").getV
                 // value().toString();

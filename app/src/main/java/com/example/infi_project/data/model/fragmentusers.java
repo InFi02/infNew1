@@ -48,6 +48,8 @@ public class fragmentusers extends Fragment  {
     String mobileText;
     String mynumber;
 
+    public boolean checkView=false;
+
 
     private ArrayList<String> profileNameList= new ArrayList<>();
     private ArrayList<String> profileImageList= new ArrayList<>();
@@ -66,6 +68,7 @@ public class fragmentusers extends Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         AppMainPage activity= (AppMainPage) getActivity();
         mobileText=activity.sendData();
         mynumber=mobileText.toString();
@@ -75,6 +78,7 @@ public class fragmentusers extends Fragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        checkView=true;
 
         View view=inflater.inflate(R.layout.fragment_fragmentusers, container, false);
   // recyclerView=view.findViewById(R.id.ChatListRecycler);
@@ -92,69 +96,77 @@ public class fragmentusers extends Fragment  {
 
 
 
-        initChatRecyclerView();
+        if (checkView) initChatRecyclerView();
 
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        checkView=false;
+    }
+
     private void readUsers() {
 
-       // FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("userDetails");
+        if (checkView) {
 
-        Query query = reference.orderByKey();
+            // FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("userDetails");
 
-        ValueEventListener queryValueListener = new ValueEventListener() {
+            Query query = reference.orderByKey();
 
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-
-                    profileImageList.clear();
-                    profileNameList.clear();
-                    profileNumberList.clear();
-                    Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
-                    Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
-
-                    while (iterator.hasNext()) {
-                        DataSnapshot next = (DataSnapshot) iterator.next();
+            ValueEventListener queryValueListener = new ValueEventListener() {
 
 
-                        Log.i(TAG, "Value = " + next.child("userPhone").getValue());
-                        String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
-                        System.out.println("Value= " + value);
-                        System.out.println("mobileText= " + mynumber);
-                        if (!value.equals(mynumber)) {
-                            profileNumberList.add(value);
-                            reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
-                            reff.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
-                                    if (dataSnapshot1.exists()) {
-                                        String ProfileName = Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
-                                        String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
-                                        //Toast.makeText(getContext(),ImageUrl,Toast.LENGTH_SHORT).show();
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+
+                        profileImageList.clear();
+                        profileNameList.clear();
+                        profileNumberList.clear();
+                        Iterable<DataSnapshot> snapshotIterator = dataSnapshot.getChildren();
+                        Iterator<DataSnapshot> iterator = snapshotIterator.iterator();
+
+                        while (iterator.hasNext()) {
+                            DataSnapshot next = (DataSnapshot) iterator.next();
 
 
-                                       profileImageList.add(ImageUrl);
-                                        profileNameList.add(ProfileName);
+                            Log.i(TAG, "Value = " + next.child("userPhone").getValue());
+                            String value = Objects.requireNonNull(next.child("userPhone").getValue()).toString();
+                            System.out.println("Value= " + value);
+                            System.out.println("mobileText= " + mynumber);
+                            if (!value.equals(mynumber)) {
+                                profileNumberList.add(value);
+                                reff = FirebaseDatabase.getInstance().getReference().child("userDetails").child(value);
+                                reff.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                                        if (dataSnapshot1.exists()) {
+                                            String ProfileName = Objects.requireNonNull(dataSnapshot1.child("userName").getValue()).toString();
+                                            String ImageUrl = Objects.requireNonNull(dataSnapshot1.child("image").getValue()).toString();
+                                            //Toast.makeText(getContext(),ImageUrl,Toast.LENGTH_SHORT).show();
 
-                                    } else {
-                                        Toast.makeText(getContext(), "User Details doesn't exist", Toast.LENGTH_SHORT).show();
+
+                                            profileImageList.add(ImageUrl);
+                                            profileNameList.add(ProfileName);
+
+                                        } else {
+                                            Toast.makeText(getContext(), "User Details doesn't exist", Toast.LENGTH_SHORT).show();
+                                        }
+                                        initChatRecyclerView();
                                     }
-                                    initChatRecyclerView();
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                }
+                                    }
 
-                            });
+                                });
 
-                        } else continue;
-                    }
+                            } else continue;
+                        }
 
 
 
@@ -170,29 +182,32 @@ public class fragmentusers extends Fragment  {
 
                         userAdapter = new UserAdapter(getContext(), musers);
                         recyclerView.setAdapter(userAdapter);*/
+                    }
+
                 }
 
-            }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
 
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            };
 
-            }
-
-
-        };
-
-        query.addValueEventListener(queryValueListener);
+            query.addValueEventListener(queryValueListener);
+        }
 
     }
 
     private void initChatRecyclerView() {
+        if (checkView) {
 
-        RecyclerView chatRecyclerView= getView().findViewById(R.id.ChatListRecycler);
-        UserAdapter userAdapter= new UserAdapter(getContext(),profileNameList,profileImageList,profileNumberList);
-        chatRecyclerView.setAdapter(userAdapter);
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            RecyclerView chatRecyclerView = getView().findViewById(R.id.ChatListRecycler);
+            UserAdapter userAdapter = new UserAdapter(getContext(), profileNameList, profileImageList, profileNumberList);
+            chatRecyclerView.setAdapter(userAdapter);
+            chatRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        }
 
 
     }
