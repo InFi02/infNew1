@@ -109,6 +109,27 @@ ProfileTab extends Fragment {
 
 
         RetrieveUserInfo(value);
+        DatabaseReference checkreq;
+
+
+        checkreq = FirebaseDatabase.getInstance().getReference().child("Connections");
+        checkreq.child(mobileText).child("connected").child(value).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+//                    Toast.makeText(getContext(), "You are already connected", Toast.LENGTH_SHORT).show();
+                    Connect.setText("Connected");
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
 
@@ -130,6 +151,12 @@ ProfileTab extends Fragment {
         });
 
       */
+        if(value.equals(mobileText)) {
+            Connect.setVisibility(View.INVISIBLE);
+            Message.setVisibility(View.INVISIBLE);
+            profile_pic.setClickable(false);
+
+        }
 
 
         profile_pic.setOnClickListener(new View.OnClickListener() {
@@ -146,10 +173,11 @@ ProfileTab extends Fragment {
 
         });
 
-        if(value.equals(mobileText)) {
-            Connect.setVisibility(View.INVISIBLE);
-            Message.setVisibility(View.INVISIBLE);
-        }
+//        if(value.equals(mobileText)) {
+//            Connect.setVisibility(View.INVISIBLE);
+//            Message.setVisibility(View.INVISIBLE);
+//
+//        }
 
 
         Message.setOnClickListener(new View.OnClickListener() {

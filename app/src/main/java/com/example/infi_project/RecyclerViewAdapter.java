@@ -68,10 +68,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //Glide.with(mContext).asBitmap();
         holder.interest_name.setText(interestNames.get(position));
 
-        if(selectedPosition==position)
-            holder.itemView.setBackgroundColor(Color.parseColor("#070707"));
-        else
-            holder.itemView.setBackgroundColor(Color.parseColor("#2FDAD0D0"));
+        if(selectedPosition==position) {
+            holder.interest_name.setBackgroundColor(Color.parseColor("#FFAAA7A7"));
+            holder.interestRecyclerCard.setCardBackgroundColor(Color.parseColor("#FFAAA7A7"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
+        else {
+            holder.itemView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.interestRecyclerCard.setCardBackgroundColor(Color.parseColor("#FFF6F6D9"));
+            holder.interest_name.setBackgroundColor(Color.parseColor("#FFF6F6D9"));
+        }
 
 
         holder.interest_name.setOnClickListener(
